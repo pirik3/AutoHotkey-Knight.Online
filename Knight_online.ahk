@@ -57,7 +57,7 @@ Atack()
   sleep, 50
   send, {r up}
   sleep, 50
-  send, {r down}0
+  send, {r down}
   sleep, 50
   send, {r up}
   sleep, 50
