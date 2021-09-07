@@ -1,4 +1,4 @@
-; #Include <FindText>0
+; #Include <FindText>
 
  t1:=A_TickCount, X:=Y:=""
 
