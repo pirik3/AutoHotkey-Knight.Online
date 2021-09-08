@@ -1,15 +1,64 @@
 ; #Include <FindText>
 
+; Ensures that there is only a single instance of this script running
+#SingleInstance, Force
+
  t1:=A_TickCount, X:=Y:=""
+ 
+
+
+
+ 
+/* Tus sorma penceresi
+Gui, add, Radio, vRadios , Mage.
+Gui, add, Radio, , Archer.
+Gui, add, Radio, , Priest.
+Gui, add, Radio, , Warrior.
+
+Gui, add, Button, gEVENT_BTN1, OK
+Gui, show
+Return
+
+
+EVENT_BTN1:
+  Gui,submit
+  ;MsgBox you choosed: %Radios%
+  if Radios = 1
+{
+  
+}
+  if Radios = 2
+{
+  InputBox, WolfKey, Tus Kayit, Archer Wolf Tus., , 250, 150
+}
+  if Radios = 3
+{
+  InputBox, KitapKey, Tus Kayit, Priest Kitap Tus., , 250, 150
+  InputBox, Str30Key, Tus Kayit, Priest STR30 Tus., , 250, 150
+}
+  if Radios = 4
+{
+  
+}
+
+Return
+*/
+
+
 
 ;InputBox, KitapKey, Tus Kayit, Priest Kitap Tus., , 250, 150
 ;InputBox, Str30Key, Tus Kayit, Priest STR30 Tus., , 250, 150
 ;InputBox, WolfKey, Tus Kayit, Archer Wolf Tus., , 250, 150
 global KitapKey:=0
 global Str30Key:=9
-
+global WolfKey:=8
 ; global , script icerisinde kullanilmasi icin verilmeli, variable 'a script ecerisinde 'genel' degerini kazandiriyor.
 ;{ Genel/Ortak
+;}
+;{Pet
+global PetItemTab:="|<PetItemTab>*121$30.1bzzznbzzzn3VkFnbAmAna0nAnaDnAnbCnA1XUnAU"
+global PetFeedConfirm:="|<PetFeedConfirm>**50$43.Tk03900Q801gU09zxzrzzxnXdl8IWVgrRYvgEjPinRqcLhrNCvL/qvgbRhyvRqHir3biv9rO"
+global PetYaprak:="|<PetYaprak>##0$0/0/398C39,5/0/4A8C4A,-1/3/316B31,-5/4/317331,12/8/397339,7/9/295229,0/10/4A9439,6/5/5AAD4A,9/3/6BA552,-6/8/52A54A"
 ;}
 ;{ Rogue
 global wolf:="|<wolf>##0$0/0/881111,0/-8/BB6655,14/-11/888888,12/-12/111111,10/5/AA5555,-5/-5/550000,-6/-9/440000"
@@ -25,8 +74,7 @@ global str30:="|<str30>##0$0/0/FF7744,-5/1/330000,1/-5/CC2200,10/1/DD7755,8/4/CC
 
 ;{ Moblar
 global ShadowSeeker:="|<ShadowSeeker>**50$104.07k01w00000003s003zY00N0000Ts00m001UN006E000Q200AU00nqTzjbzzzaSjnzDzzxzYsD1lnaFjy7VnC7/7tjvaNitaMzAnAbAkkCNknYtZPq1rBn/rArlaNgtCNKsy820ks3DyNYvCHbKiTnTrwbTnziNivaPlXbxngvBngw7aMi1lwtlUy3UnC3DzzzzzzzzwTzzzzzzz7wtbtyD3b0zVwTAtzs"
-global Sabertooth:="|<Sabertooth>*110$75.001w000l003y1zU8U00yE07sUM414006E00n46SzswzTnzjyMyXw30wC067VU0o7y8nAkHaNaMWk716FaSMmAn6PkX8m0nnCHaMnzYN6FySMmAn6QsW8XCnnaNaMnUC10w6S67Vk6Tzzzzzzzzzzzz7wTjkyzSyDXyw"
-global SaberTooth2:="|<SaberTooth>##0$0/0/EAEAEA,-1/-3/EAEAEA,0/-4/C9C9C9,-5/-2/EAEAEA,-10/-2/C9C9C9,-13/-2/EAEAEA,-15/-2/000000,-20/-2/000000,-26/-2/000000,-31/-2/EAEAEA,-29/-3/5E5E5E,-34/-3/000000,-38/-3/353535,-42/-3/000000,-46/-3/000000,-51/-3/EAEAEA,-54/-2/353535,-57/-2/EAEAEA,-61/-3/C9C9C9"
+global SaberTooth:="|<SaberTooth>##0$0/0/EAEAEA,-1/-3/EAEAEA,0/-4/C9C9C9,-5/-2/EAEAEA,-10/-2/C9C9C9,-13/-2/EAEAEA,-15/-2/000000,-20/-2/000000,-26/-2/000000,-31/-2/EAEAEA,-29/-3/5E5E5E,-34/-3/000000,-38/-3/353535,-42/-3/000000,-46/-3/000000,-51/-3/EAEAEA,-54/-2/353535,-57/-2/EAEAEA,-61/-3/C9C9C9"
 
 ;} End of Moblar
  
@@ -41,8 +89,10 @@ global SaberTooth2:="|<SaberTooth>##0$0/0/EAEAEA,-1/-3/EAEAEA,0/-4/C9C9C9,-5/-2/
  global H:=H
  ;}
  
- priestkitap()
- str30()
+ ;priestkitap()
+ ;str30()
+ PetFeed()
+
  
  if (ok:=FindText(X+536, Y+30, X+747, Y+60, 0, 0, SaberTooth2))
  {
@@ -53,17 +103,11 @@ global SaberTooth2:="|<SaberTooth>##0$0/0/EAEAEA,-1/-3/EAEAEA,0/-4/C9C9C9,-5/-2/
 
 Atack()
 {
-  send, {r down}
+  send, {r down}{r up}
   sleep, 50
-  send, {r up}
+  send, {r down}{r up}
   sleep, 50
-  send, {r down}
-  sleep, 50
-  send, {r up}
-  sleep, 50
-  send, {3 down}
-  sleep, 650
-  send, {3 up}
+  send, {3 down}{3 up}
 }
 
 
@@ -81,9 +125,7 @@ priestkitap()
   {
   ;WinActivate, Knight OnLine Client
   ;ToolTip, %X%x / %Y%y / %W%w / %H%h
-  send, {%KitapKey% down}
-  sleep, 50
-  send, {%KitapKey% up}
+  send, {%KitapKey% down}{%KitapKey% up}
   Sleep, 2000
   }
 }
@@ -100,17 +142,44 @@ str30()
   {
   ;WinActivate, Knight OnLine Client
   ;ToolTip, %X%x / %Y%y / %W%w / %H%h
-  send, {%Str30Key% down}
-  sleep, 50
-  send, {%Str30Key% up}
+  send, {%Str30Key% down}{%Str30Key% up}
   Sleep, 2000
   }
 }
 ;} End of Priest Fonksiyon
 
-OtoKutu()
+PetFeed()
 {
-  
+  PixelGetColor, pet70, X + 1243, Y + 81
+  PixelGetColor, pet50, X + 1200, Y + 81
+  PixelGetColor, pet30, X + 1160, Y + 81
+  if (pet70 = 0x4A526B)
+  {
+    send, {p down}{p up}
+    Sleep, 2000
+    if (ok:=FindText(X+1041, Y+39, X+1160, Y+100, 0, 0, PetItemTab)) ; Item Tabi Aktif degilse Tikla
+    {
+      CoordMode, Mouse
+      Xx:=ok.1.x, Yy:=ok.1.y, Comment:=ok.1.id
+      Click, %Xx%, %Yy%
+      Sleep, 500
+    }
+    if (ok:=FindText(X+935, Y+273, X+1270, Y+465, 0, 0, PetYaprak)) ; Cantada Yapragi bul
+    {
+      CoordMode, Mouse
+      Xx:=ok.1.x, Yy:=ok.1.y, Comment:=ok.1.id
+      MouseClickDrag, L, %Xx%, %Yy%, X+1230, Y+185, 5
+      Sleep, 500
+    }
+    if (ok:=FindText(X+1073, Y+252, X+1162, Y+284, 0, 0, PetFeedConfirm)) ; Confrim butonuna tikla
+    {
+      CoordMode, Mouse
+      Xx:=ok.1.x, Yy:=ok.1.y, Comment:=ok.1.id
+      Click, %Xx%, %Yy%
+      Sleep, 500
+      send, {p down}{p up}
+    }
+  }
 }
 
 ;{ Rogue Fonksiyonlar
@@ -127,15 +196,14 @@ Wolf()
     {
     WinActivate, Knight OnLine Client
     ToolTip, %X%x / %Y%y / %W%w / %H%h
-    ;send, {8 down}
-    ;sleep, 50
-    ;send, {8 up}
+    ;send, {8 down}{8 up}
     ;Sleep, 2000
     }
 }
 
-;} End of Rogue Fonksiypn
-
+;} End of Rogue Fonksiyon00
+ Home::Pause
+ Esc::ExitApp
 ;{ FindText Script. Editlemeyiniz !!!!
 
 
