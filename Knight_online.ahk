@@ -9,7 +9,7 @@
 ;  Date    : 13/09/2021
 ;
 ;  Usage:  will be update this part later
-;	   after adding more future.
+;	   after adding some more future.
 ;
 ;===========================================
 ;*/
