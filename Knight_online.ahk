@@ -1,3 +1,19 @@
+;/*
+;===========================================
+;  Knight online Macro bot
+;  https://pirik3.blogspot.com/
+;  onlinehile.com
+;
+;  Author  : pirik3
+;  Version : 1.6
+;  Date    : 13/09/2021
+;
+;  Usage:  will be update this part later
+;	   after adding more future.
+;
+;===========================================
+;*/
+
 ; #Include <FindText>
 ;#Include Gdip.ahk
 
