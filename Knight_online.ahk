@@ -12,8 +12,10 @@ Gui, Add, Button, x2 y89 w110 h30 , KoordinatAl
 Gui, Add, Button, x2 y130 w110 h30 , CharNickAL
 global ButtonCharNickAL
 global ButtonKoordinarAl
-Gui, Add, Picture, x252 y9 w180 h100 vpic
+Gui, Add, Picture, x252 y9 w51 h10 vpic
+Gui, Add, Picture, x252 y50 w66 h12 vpic2
 global pic
+global pic2
 ; Generated using SmartGUI Creator for SciTE
 
 Gui, Add, CheckBox, x12 y9 w90 h40 vautograb, screeenshoot
@@ -68,6 +70,7 @@ setworkingdir,%a_scriptdir%
 ;}
 
 ;{ Rogue
+global ShadowVain:="|<ShadowVain>*84$75.zzzzzzzzzzzzzzjzzjzzzzznzkRzzxzzzrrzzyxjzzjzzySzzzbwC71Virva7MSDgyPdoazRyPNyBq2xSoLti3PjxibLfqdzfbPRjhpmNAnDxRnPi3ikMADNzXkPRzzzzzzzzzzzzw" ; Archer send U
 global wolf:="|<wolf>##0$0/0/881111,0/-8/BB6655,14/-11/888888,12/-12/111111,10/5/AA5555,-5/-5/550000,-6/-9/440000"
 ;}
 
@@ -214,9 +217,9 @@ Koordinat_Al()
 CharNick_Al()
 {
   ButtonCharNickAL:
-  snap := Gdip_BitmapFromScreen(X+611 . "|" . Y+362 . "|" . 60 . "|" . 8)
+  snap := Gdip_BitmapFromScreen(X+609 . "|" . Y+356 . "|" . 66 . "|" . 12)
   Gdip_SaveBitmapToFile(snap, "CharNick.jpg")
-  GuiControl,,  pic , CharNick.jpg  
+  GuiControl,,  pic2 , CharNick.jpg  
   return
 }
   
