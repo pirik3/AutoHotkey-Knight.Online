@@ -20,6 +20,7 @@
 ; Ensures that there is only a single instance of this script running
 #SingleInstance, Force
 setworkingdir,%a_scriptdir%
+CoordMode Pixel, Screen	; CoordMode, ToolTip|Pixel|Mouse|Caret|Menu [, Screen|Window|Client]
 pToken := Gdip_Startup()
 
  t1:=A_TickCount, X:=Y:=""
@@ -35,14 +36,15 @@ Gui Add, TreeView, x2 y3 w228 h391 -ReadOnly AltSubmit Checked
 Gui Add, Tab3, x232 y8 w167 h305, Genel|Atak|Rogue|Priest|Warr.|Mage|LOG
 Gui Tab, 1
 Gui Add, Text, x240 y72 w50 h23 +0x200, HP pot >
-Gui Add, Hotkey, x296 y72 w18 h23 vHk, F1
+Gui Add, Hotkey, hWndhHk5 vHk x296 y72 w18 h23, F1
 global Hk
-Gui Add, Hotkey, hWndhHk5 vHk5 x336 y72 w18 h23, 3
+Gui Add, Hotkey, hWndhHk5 vHk5 x336 y72 w18 h23, 1
 global Hk5
-global WndhHk5
 Gui Add, Text, x240 y96 w50 h23 +0x200, MP pot >
-Gui Add, Hotkey, hWndhHk2 vHk2 x296 y96 w18 h23, f4
-Gui Add, Hotkey, hWndhHk6 vHk6 x336 y96 w18 h23, 4
+Gui Add, Hotkey, hWndhHk2 vHk2 x296 y96 w18 h23, f1
+global Hk2
+Gui Add, Hotkey, hWndhHk6 vHk6 x336 y96 w18 h23, 2
+global Hk6
 Gui Add, Text, x240 y120 w93 h23 +0x200, Magic Hammer >
 Gui Add, Hotkey, hWndhHk3 vHk3 x336 y120 w18 h23, f5
 Gui Add, Hotkey, hWndhHk7 vHk7 x376 y120 w18 h23, 5
@@ -175,7 +177,7 @@ global R2C2 := TV_Add("MP doldur.", R2)
 global R2C2C1 := TV_Add("MP pot %90.", R2C2)
 global R2C2C2 := TV_Add("MP pot %80.", R2C2)
 global R2C2C3 := TV_Add("MP pot %70.", R2C2)
-global R21C2C4 := TV_Add("MP pot %60.", R2C2)
+global R2C2C4 := TV_Add("MP pot %60.", R2C2)
 global R2C2C5 := TV_Add("MP pot %50.", R2C2)
 global R2C3 := TV_Add("Koordinat degisirse Script durdur/kapat.", R2)
 global R2C4 := TV_Add("Partiden cikarsam?.", R2)
@@ -331,7 +333,7 @@ HPpot()
 
 ;{ Genel/Ortak
 
-UstteTut()
+UstteTut() ;#DONE
 {
   if(tv_get(R1, "checked"))
   {
@@ -346,7 +348,7 @@ PetFeed() ; Pet bari'in SAG-Ust kosede olmasi gerekiyor.
     PixelGetColor, pet70, X + 1243, Y + 81
     PixelGetColor, pet50, X + 1200, Y + 81
     PixelGetColor, pet30, X + 1160, Y + 81
-    if((tv_get(R2C5C1C1, "checked")) and pet70 = 0x4A526B) ; %70
+    if(tv_get(R2C5C1C1, "checked") and pet70 = 0x4A526B) or (tv_get(R2C5C1C2, "checked") and pet50 = 0x4A526B) or (tv_get(R2C5C1C3, "checked") and pet30 = 0x4A526B) ; pet -> %70 / %50 / %30
     ;if(pet70 = 0x4A526B)
     {
       send, {p down}{p up}
@@ -359,7 +361,7 @@ PetFeed() ; Pet bari'in SAG-Ust kosede olmasi gerekiyor.
         Sleep, 500
       }
       
-      if ((tv_get(R2C5C1, "checked")) and (ok:=FindText(X+935, Y+273, X+1270, Y+465, 0, 0, PetYaprak))) ; yaprak
+      if ((tv_get(R2C5C1, "checked") and (ok:=FindText(X+935, Y+273, X+1270, Y+465, 0, 0, PetYaprak)))) ; yaprak
       ;if (ok:=FindText(X+935, Y+273, X+1270, Y+465, 0, 0, PetYaprak)) ; Cantada Yapragi bul ve besleme kutucuguna surukle.
       {
         CoordMode, Mouse
@@ -378,20 +380,10 @@ PetFeed() ; Pet bari'in SAG-Ust kosede olmasi gerekiyor.
       }
     }
   }
-    
-  if((tv_get(R2C5C1C2, "checked")) and pet50 = 0x4A526B) ; %50
-  {
-  ;if(pet50 = 0x4A526B)
-  }
-    
-  if((tv_get(R2C5C1C3, "checked")) and pet30 = 0x4A526B) ; %30
-  {
-  ;if(pet30 = 0x4A526B)
-  }
 }
   
 
-HPpot()
+HPpot() ;#DONE
 {
   ;CoordMode Pixel, Screen	; CoordMode, ToolTip|Pixel|Mouse|Caret|Menu [, Screen|Window|Client]
   PixelGetColor, hp90, X + 211, Y + 62
@@ -399,31 +391,7 @@ HPpot()
   PixelGetColor, hp70, X + 163, Y + 62
   PixelGetColor, hp60, X + 144, Y + 62
   PixelGetColor, hp50, X + 115, Y + 62
-  if(tv_get(R2C1C1, "checked") and hp90 != 0x100CFF) ; HP %90
-  ;if (hp90 != 0x100CFF)
-  {
-    ;ToolTip, %Hk%
-    send, {%Hk% down}{%Hk% up}{%Hk5% down}{%Hk5% up}
-  }
-  if(tv_get(R2C1C2, "checked") and hp80 != 0x100CFF) ; HP %80
-  ;if (hp90 != 0x100CFF)
-  {
-    ;ToolTip, %Hk%
-    send, {%Hk% down}{%Hk% up}{%Hk5% down}{%Hk5% up}
-  }
-  if(tv_get(R2C1C3, "checked") and hp70 != 0x100CFF) ; HP %70
-  ;if (hp90 != 0x100CFF)
-  {
-    ;ToolTip, %Hk%
-    send, {%Hk% down}{%Hk% up}{%Hk5% down}{%Hk5% up}
-  }
-  if(tv_get(R2C1C4, "checked") and hp60 != 0x100CFF) ; HP %60
-  ;if (hp90 != 0x100CFF)
-  {
-    ;ToolTip, %Hk%
-    send, {%Hk% down}{%Hk% up}{%Hk5% down}{%Hk5% up}
-  }
-  if(tv_get(R2C1C5, "checked") and hp50 != 0x100CFF) ; HP %50
+  if(tv_get(R2C1C1, "checked") and hp90 != 0x100CFF) or (tv_get(R2C1C2, "checked") and hp80 != 0x100CFF) or (tv_get(R2C1C3, "checked") and hp70 != 0x100CFF) or (tv_get(R2C1C4, "checked") and hp60 != 0x100CFF) or (tv_get(R2C1C5, "checked") and hp50 != 0x100CFF) ; HP
   ;if (hp90 != 0x100CFF)
   {
     ;ToolTip, %Hk%
@@ -432,8 +400,44 @@ HPpot()
 }
 
 
-MPpot()
+MPpot() ;#DONE
 {
+  ;CoordMode Pixel, Screen	; CoordMode, ToolTip|Pixel|Mouse|Caret|Menu [, Screen|Window|Client]
+  PixelGetColor, mp90, X + 211, Y + 79
+  PixelGetColor, mp80, X + 182, Y + 79
+  PixelGetColor, mp70, X + 163, Y + 79
+  PixelGetColor, mp60, X + 144, Y + 79
+  PixelGetColor, mp50, X + 115, Y + 79
+  if(tv_get(R2C2C1, "checked") and mp90 != 0x100CFF) ; MP %90
+  ;if (hp90 != 0x100CFF)
+  {
+    ;ToolTip, %Hk%
+    send, {%Hk2% down}{%Hk2% up}{%Hk6% down}{%Hk6% up}
+  }
+  if(tv_get(R2C2C2, "checked") and mp80 != 0x100CFF) ; MP %80
+  ;if (hp90 != 0x100CFF)
+  {
+    ;ToolTip, %Hk%
+    send, {%Hk2% down}{%Hk2% up}{%Hk6% down}{%Hk6% up}
+  }
+  if(tv_get(R2C2C3, "checked") and mp70 != 0x100CFF) ; MP %70
+  ;if (hp90 != 0x100CFF)
+  {
+    ;ToolTip, %Hk%
+    send, {%Hk2% down}{%Hk2% up}{%Hk6% down}{%Hk6% up}
+  }
+  if(tv_get(R2C2C4, "checked") and mp60 != 0x100CFF) ; MP %60
+  ;if (hp90 != 0x100CFF)
+  {
+    ;ToolTip, %Hk%
+    send, {%Hk2% down}{%Hk2% up}{%Hk6% down}{%Hk6% up}
+  }
+  if(tv_get(R2C2C5, "checked") and mp50 != 0x100CFF) ; MP %50
+  ;if (hp90 != 0x100CFF)
+  {
+    ;ToolTip, %Hk%
+    send, {%Hk2% down}{%Hk2% up}{%Hk6% down}{%Hk6% up}
+  }
 }
 
 Repair()
