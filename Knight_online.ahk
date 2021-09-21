@@ -15,33 +15,227 @@
 ;*/
 
 ; #Include <FindText>
-;#Include Gdip.ahk
+; #Include Gdip.ahk
 
 ; Ensures that there is only a single instance of this script running
 #SingleInstance, Force
-
+setworkingdir,%a_scriptdir%
 pToken := Gdip_Startup()
 
  t1:=A_TickCount, X:=Y:=""
- 
-Gui, Add, Button, x2 y89 w110 h30 , KoordinatAl
-Gui, Add, Button, x2 y130 w110 h30 , CharNickAL
-global ButtonCharNickAL
-global ButtonKoordinarAl
-Gui, Add, Picture, x252 y9 w51 h10 vpic
-Gui, Add, Picture, x252 y50 w66 h12 vpic2
-global pic
-global pic2
-; Generated using SmartGUI Creator for SciTE
 
-Gui, Add, CheckBox, x12 y9 w90 h40 vautograb, screeenshoot
-global autograb
-; Generated using SmartGUI Creator for SciTE
-Gui, Show, w479 h379, Untitled GUI
-;return
+;{=====================GUI====================================================================;
+Gui Font, s9, Segoe UI
+Gui Add, Button, hWndhBtnPauseRun vBtnPauseRun x232 y368 w164 h23, PAUSE / RUN
+Gui Add, Button, hWndhBtnMobAl2 vBtnMobAl2 x312 y336 w80 h23, Mob AL
+Gui Add, Button, hWndhBtnKoordinatAl3 vBtnKoordinatAl3 x232 y312 w80 h23, Koordinat Al
+Gui Add, Button, hWndhBtnNickAl4 vBtnNickAl4 x232 y336 w80 h23, Nick Al
+Gui Add, Button, hWndhBtnOku5 vBtnOku5 x312 y312 w80 h23, OKU
+Gui Add, TreeView, x2 y3 w228 h391 -ReadOnly AltSubmit Checked
+Gui Add, Tab3, x232 y8 w167 h305, Genel|Atak|Rogue|Priest|Warr.|Mage|LOG
+Gui Tab, 1
+Gui Add, Text, x240 y72 w50 h23 +0x200, HP pot >
+Gui Add, Hotkey, x296 y72 w18 h23 vHk, F1
+global Hk
+Gui Add, Hotkey, hWndhHk5 vHk5 x336 y72 w18 h23, 3
+global Hk5
+global WndhHk5
+Gui Add, Text, x240 y96 w50 h23 +0x200, MP pot >
+Gui Add, Hotkey, hWndhHk2 vHk2 x296 y96 w18 h23, f4
+Gui Add, Hotkey, hWndhHk6 vHk6 x336 y96 w18 h23, 4
+Gui Add, Text, x240 y120 w93 h23 +0x200, Magic Hammer >
+Gui Add, Hotkey, hWndhHk3 vHk3 x336 y120 w18 h23, f5
+Gui Add, Hotkey, hWndhHk7 vHk7 x376 y120 w18 h23, 5
+Gui Add, Text, x240 y144 w93 h23 +0x200, Trans. SC >
+Gui Add, Hotkey, hWndhHk4 vHk4 x336 y144 w18 h23, f6
+Gui Add, Hotkey, hWndhHk8 vHk8 x376 y144 w18 h23, 6
+Gui Add, Text, x320 y72 w9 h23 +0x200, +
+Gui Add, Text, x320 y96 w9 h23 +0x200, +
+Gui Add, Text, x360 y120 w9 h23 +0x200, +
+Gui Add, Text, x360 y144 w9 h23 +0x200, +
+Gui Tab, 2
+Gui Add, Text, x240 y104 w19 h23 +0x200, 1 >
+Gui Add, Text, x240 y128 w19 h23 +0x200, 2 >
+Gui Add, Text, x240 y152 w19 h23 +0x200, 3 >
+Gui Add, Text, x240 y176 w19 h23 +0x200, 4 >
+Gui Add, Text, x240 y200 w19 h23 +0x200, 5 >
+Gui Add, Hotkey, hWndhHk9 vHk9 x264 y104 w18 h23, f1
+Gui Add, Hotkey, hWndhHk10 vHk10 x264 y128 w18 h23, f1
+Gui Add, Hotkey, hWndhHk11 vHk11 x264 y152 w18 h23, f1
+Gui Add, Hotkey, hWndhHk12 vHk12 x264 y176 w18 h23, f1
+Gui Add, Hotkey, hWndhHk13 vHk13 x264 y200 w18 h23, f1
+Gui Add, Text, x288 y104 w9 h23 +0x200, +
+Gui Add, Text, x288 y128 w9 h23 +0x200, +
+Gui Add, Text, x288 y152 w9 h23 +0x200, +
+Gui Add, Text, x288 y176 w9 h23 +0x200, +
+Gui Add, Text, x288 y200 w9 h23 +0x200, +
+Gui Add, Hotkey, hWndhHk14 vHk14 x304 y104 w18 h23, 3
+Gui Add, Hotkey, hWndhHk15 vHk15 x304 y128 w18 h23, 4
+Gui Add, Hotkey, hWndhHk16 vHk16 x304 y152 w18 h23, 5
+Gui Add, Hotkey, hWndhHk17 vHk17 x304 y176 w18 h23, 6
+Gui Add, Hotkey, hWndhHk18 vHk18 x304 y200 w18 h23, 7
+Gui Add, Edit, x344 y104 w48 h21, 1000
+Gui Add, Text, x328 y104 w9 h23 +0x200, +
+Gui Add, Text, x328 y128 w9 h23 +0x200, +
+Gui Add, Text, x328 y152 w9 h23 +0x200, +
+Gui Add, Text, x328 y176 w9 h23 +0x200, +
+Gui Add, Text, x328 y200 w9 h23 +0x200, +
+Gui Add, Edit, x344 y128 w48 h21, 1000
+Gui Add, Edit, x344 y152 w48 h21, 3000
+Gui Add, Edit, x344 y176 w48 h21, 2000
+Gui Add, Edit, x344 y200 w48 h21, 1000
+Gui Add, Text, x288 y72 w102 h23 +0x200, Zaman(1sn = 1000)
+Gui Add, Text, x240 y224 w19 h23 +0x200, 6 >
+Gui Add, Text, x240 y248 w19 h23 +0x200, 7 >
+Gui Add, Hotkey, hWndhHk19 vHk19 x264 y224 w18 h23, f1
+Gui Add, Hotkey, hWndhHk20 vHk20 x304 y224 w18 h23, 8
+Gui Add, Edit, x344 y224 w48 h21, 1000
+Gui Add, Text, x328 y224 w9 h23 +0x200, +
+Gui Add, Text, x288 y224 w9 h23 +0x200, +
+Gui Add, Edit, x264 y248 w58 h21, Rr
+Gui Add, Text, x328 y248 w9 h23 +0x200, +
+Gui Add, Edit, x344 y248 w48 h21, 1000
+Gui Add, DropDownList, x240 y272 w150, Archer > 3-5 combo|Priest > Helish combo|
+Gui Tab, 3
+Gui Add, Hotkey, hWndhHk21 vHk21 x296 y72 w18 h23, f1
+Gui Add, Text, x240 y72 w39 h23 +0x200, Wolf >
+Gui Add, Text, x240 y96 w45 h23 +0x200, L. Feet >
+Gui Add, Hotkey, hWndhHk22 vHk22 x296 y96 w18 h23, f1
+Gui Add, Hotkey, hWndhHk23 vHk23 x296 y120 w18 h23, f2
+Gui Add, Text, x240 y120 w45 h23 +0x200, SW >
+Gui Add, Text, x240 y144 w45 h23 +0x200, AC-1 >
+Gui Add, Text, x240 y216 w45 h23 +0x200, Cure >
+Gui Add, Hotkey, hWndhHk24 vHk24 x296 y144 w18 h23, f2
+Gui Add, Hotkey, hWndhHk25 vHk25 x296 y216 w18 h23, f2
+Gui Add, Text, x240 y168 w45 h23 +0x200, AC-2 >
+Gui Add, Text, x240 y192 w45 h23 +0x200, AC-3 >
+Gui Add, Hotkey, hWndhHk26 vHk26 x296 y168 w18 h23, f2
+Gui Add, Hotkey, hWndhHk27 vHk27 x296 y192 w18 h23, f2
+Gui Add, Text, x240 y240 w45 h23 +0x200, Minor >
+Gui Add, Hotkey, hWndhHk28 vHk28 x296 y240 w18 h23, f1
+Gui Add, Text, x320 y96 w9 h23 +0x200, +
+Gui Add, Text, x320 y120 w9 h23 +0x200, +
+Gui Add, Text, x320 y144 w9 h23 +0x200, +
+Gui Add, Text, x320 y168 w9 h23 +0x200, +
+Gui Add, Text, x320 y192 w9 h23 +0x200, +
+Gui Add, Text, x320 y72 w9 h23 +0x200, +
+Gui Add, Text, x320 y216 w9 h23 +0x200, +
+Gui Add, Text, x320 y240 w9 h23 +0x200, +
+Gui Add, Hotkey, hWndhHk29 vHk29 x336 y72 w18 h23, 9
+Gui Add, Hotkey, hWndhHk30 vHk30 x336 y96 w18 h23, 5
+Gui Add, Hotkey, hWndhHk31 vHk31 x336 y120 w18 h23, 9
+Gui Add, Hotkey, hWndhHk32 vHk32 x336 y144 w18 h23, 6
+Gui Add, Hotkey, hWndhHk33 vHk33 x336 y168 w18 h23, 7
+Gui Add, Hotkey, hWndhHk34 vHk34 x336 y192 w18 h23, 8
+Gui Add, Hotkey, hWndhHk35 vHk35 x336 y216 w18 h23, 4
+Gui Add, Hotkey, hWndhHk36 vHk36 x336 y240 w18 h23, 0
+Gui Tab, 4
+Gui Add, Text, x240 y72 w40 h23 +0x200, Kitap >
+Gui Add, Text, x240 y96 w49 h23 +0x200, STR 15 >
+Gui Add, Text, x240 y120 w48 h23 +0x200, STR 30 >
+Gui Add, Text, x240 y144 w40 h23 +0x200, Buff >
+Gui Add, Text, x240 y168 w40 h23 +0x200, AC >
+Gui Add, Text, x240 y192 w40 h23 +0x200, Fresh >
+Gui Add, Text, x240 y216 w40 h23 +0x200, Cure >
+Gui Add, Hotkey, hWndhHk37 vHk37 x296 y72 w18 h23, f1
+Gui Add, Hotkey, hWndhHk38 vHk38 x296 y96 w18 h23, f2
+Gui Add, Hotkey, hWndhHk39 vHk39 x296 y120 w18 h23, f1
+Gui Add, Hotkey, hWndhHk40 vHk40 x296 y144 w18 h23, f2
+Gui Add, Hotkey, hWndhHk41 vHk41 x296 y168 w18 h23, f2
+Gui Add, Hotkey, hWndhHk42 vHk42 x296 y192 w18 h23, f2
+Gui Add, Hotkey, hWndhHk42 vHk43 x296 y216 w18 h23, f2
+Gui Add, Hotkey, hWndhHk43 vHk44 x336 y72 w18 h23, 1
+Gui Add, Hotkey, hWndhHk44 vHk45 x336 y96 w18 h23, 1
+Gui Add, Hotkey, hWndhHk45 vHk46 x336 y120 w18 h23, 1
+Gui Add, Hotkey, hWndhHk46 vHk47 x336 y144 w18 h23, 1
+Gui Add, Hotkey, hWndhHk47 vHk48 x336 y168 w18 h23, 1
+Gui Add, Hotkey, hWndhHk48 vHk49 x336 y192 w18 h23, 1
+Gui Add, Hotkey, hWndhHk48 vHk50 x336 y216 w18 h23, 1
+Gui Add, Text, x320 y72 w9 h23 +0x200, +
+Gui Add, Text, x320 y96 w9 h23 +0x200, +
+Gui Add, Text, x320 y120 w9 h23 +0x200, +
+Gui Add, Text, x320 y144 w9 h23 +0x200, +
+Gui Add, Text, x320 y168 w9 h23 +0x200, +
+Gui Add, Text, x320 y192 w9 h23 +0x200, +
+Gui Add, Text, x320 y216 w9 h23 +0x200, +
+Gui Tab, 7
+Gui Add, ListView, x234 y72 w160 h237 +LV0x4000, ListView
+Gui Tab
+Gui Show, w402 h397, K.O. Yardimci
+;{ ===================TreeView====Inner=Text==========================================;
+global R1 := TV_Add("Ustte tut." , R1)
+global R2 := TV_Add("Genel." , R2) 
+global R2C1 := TV_Add("HP doldur." , R2)  
+global R2C1C1 := TV_Add("HP pot/minor/heal %90.",R2C1) 
+global R2C1C2 := TV_Add("HP pot/minor/heal %80.", R2C1)
+global R2C1C3 := TV_Add("HP pot/minor/heal %70.", R2C1)
+global R2C1C4 := TV_Add("HP pot/minor/heal %60.", R2C1)
+global R2C1C5 := TV_Add("HP pot/minor/heal %50.", R2C1)
+global R2C2 := TV_Add("MP doldur.", R2)
+global R2C2C1 := TV_Add("MP pot %90.", R2C2)
+global R2C2C2 := TV_Add("MP pot %80.", R2C2)
+global R2C2C3 := TV_Add("MP pot %70.", R2C2)
+global R21C2C4 := TV_Add("MP pot %60.", R2C2)
+global R2C2C5 := TV_Add("MP pot %50.", R2C2)
+global R2C3 := TV_Add("Koordinat degisirse Script durdur/kapat.", R2)
+global R2C4 := TV_Add("Partiden cikarsam?.", R2)
+global R2C4C1 := TV_Add("Chat 'e '/Town' yazarak town at.", R2C4)
+global R2C4C2 := TV_Add("'Gate Skill' ile town at.", R2C4)
+global R2C43C3 := TV_Add("'Mouse click' ile town at.", R2C4)
+global R2C5 := TV_Add("Pet besle.", R2)
+global R2C5C1 := TV_Add("Yaprak.", R2C5)
+global R2C5C1C1 := TV_Add("Feed %70.", R2C5C1)
+global R2C5C1C2 := TV_Add("Feed %50.", R2C5C1)
+global R2C5C1C3 := TV_Add("Feed %30.", R2C5C1)
+global R2C5C2 := TV_Add("Sut.", R2C5)
+global R2C5C2C1 := TV_Add("Feed %70.", R2C5C2)
+global R2C5C2C2 := TV_Add("Feed %50.", R2C5C2)
+global R2C5C2C3 := TV_Add("Feed %30.", R2C5C2)
+global R2C5C3 := TV_Add("Ekmek.", R2C5)
+global R2C5C3C1 := TV_Add("Feed %70.", R2C5C3)
+global R2C5C3C2 := TV_Add("Feed %50.", R2C5C3)
+global R2C5C3C3 := TV_Add("Feed %30.", R2C5C3)
+global R2C6 := TV_Add("RPR, Magic Hammer ile.", R2)
+global R2C7 := TV_Add("Transformation SC kullan.", R2)
+global R2C7C1 := TV_Add("Kecoon.", R2C7)
+global R2C7C2 := TV_Add("Bowman.", R2C7)
+global R2C7C3 := TV_Add("Skeleton.", R2C7)
+global R2C7C4 := TV_Add("Burning Skeleton.", R2C7)
+global R3 := TV_Add("Rogue.", R3)
+global R3C1 := TV_Add("Wolf kullan.", R3)
+global R3C2 := TV_Add("Light Feet kullan.", R3)
+global R3C3 := TV_Add("Swift kullan.", R3)
+global R3C4 := TV_Add("AC-1.", R3)
+global R3C5 := TV_Add("AC-2.", R3)
+global R3C6 := TV_Add("AC-3.", R3)
+global R3C7 := TV_Add("Cure kullan.", R3)
+global R3C8 := TV_Add("Minor kullan.[% lik ayarini GENEL 'den seciniz.]", R3)
+global R4 := TV_Add("Priest.", R4)
+global R4C1 := TV_Add("Kitap kullan.", R4)
+global R4C2 := TV_Add("STR 15.", R4)
+global R4C3 := TV_Add("STR 30.", R4)
+global R4C4 := TV_Add("Buff kullan.", R4)
+global R4C5 := TV_Add("AC kullan.", R4)
+global R4C6 := TV_Add("Fresh kullan.", R4)
+global R4C6 := TV_Add("Cure kullan.", R4)
+global R5 := TV_Add("Mage.", R5)
+global R6 := TV_Add("Warrior.", R6)
+global R7 := TV_Add("Atak.", R7)
+global R7C1 := TV_Add("Atak KEY 1_[pasif].", R7)
+global R7C2 := TV_Add("Atak KEY 2_[pasif].", R7)
+global R7C3 := TV_Add("Atak KEY 3_[pasif].", R7)
+global R7C4 := TV_Add("Atak KEY 4_[pasif].", R7)
+global R7C5 := TV_Add("Atak KEY 5_[pasif].", R7)
+global R7C6 := TV_Add("Atak KEY 6_[pasif].", R7)
+global R7C7 := TV_Add("Atak KEY 7_[pasif].", R7)
+global R7C8 := TV_Add("Mob sec.[Devre Disi, Mob Al butonunu kullaniniz.]", R7)
+global R7C8C1 := TV_Add("Paramun.", R7C8)
+global R7C8C1 := TV_Add("Shadow Seeker.", R7C8)
+global R7C8C1 := TV_Add("Ape.", R7C8)
+;}=======================TreeView==Inner=Text====================================;
+;}==================END=of=GUI==================================================
 
-
-/* Tus sorma penceresi
+/* Class Tus sorma penceresi
 Gui, add, Radio, vRadios , Mage.
 Gui, add, Radio, , Archer.
 Gui, add, Radio, , Priest.
@@ -79,8 +273,6 @@ Return
 global KitapKey:=0
 global Str30Key:=9
 global WolfKey:=8
-setworkingdir,%a_scriptdir%
-; global , script icerisinde kullanilmasi icin verilmeli, variable 'a script ecerisinde 'genel' degerini kazandiriyor.
 
 ;{ Genel/Ortak
 ;}
@@ -101,10 +293,9 @@ global str30:="|<str30>##0$0/0/FF7744,-5/1/330000,1/-5/CC2200,10/1/DD7755,8/4/CC
 ;{ Mage
 ;}
 
-;{ Moblar
+;{ Moblar = Kullanilmiyor. Devre disi. Mob al Butonu ile image alip bunu ekran uzerinde aramak daha zahmetsiz ve basit. Bu sekilde butun moblarin kayit etmek gerekiyor ve gereksiz, uzun is, ama yapilabilir.
 global ShadowSeeker:="|<ShadowSeeker>**50$104.07k01w00000003s003zY00N0000Ts00m001UN006E000Q200AU00nqTzjbzzzaSjnzDzzxzYsD1lnaFjy7VnC7/7tjvaNitaMzAnAbAkkCNknYtZPq1rBn/rArlaNgtCNKsy820ks3DyNYvCHbKiTnTrwbTnziNivaPlXbxngvBngw7aMi1lwtlUy3UnC3DzzzzzzzzwTzzzzzzz7wtbtyD3b0zVwTAtzs"
 global SaberTooth:="|<SaberTooth>##0$0/0/EAEAEA,-1/-3/EAEAEA,0/-4/C9C9C9,-5/-2/EAEAEA,-10/-2/C9C9C9,-13/-2/EAEAEA,-15/-2/000000,-20/-2/000000,-26/-2/000000,-31/-2/EAEAEA,-29/-3/5E5E5E,-34/-3/000000,-38/-3/353535,-42/-3/000000,-46/-3/000000,-51/-3/EAEAEA,-54/-2/353535,-57/-2/EAEAEA,-61/-3/C9C9C9"
-
 ;} End of Moblar
  
 ;{ Pet
@@ -125,14 +316,11 @@ global PetYaprak:="|<PetYaprak>##0$0/0/398C39,5/0/4A8C4A,-1/3/316B31,-5/4/317331
  ;101, 103, 151, 113
  ;}
  
- ;priestkitap()
- ;str30()
- ;PetFeed()
- 
- 
+Gui, Submit, NoHide
 
-
- Koordinat_degisirse()
+ 
+UstteTut()
+HPpot()
 
  
  ;if (ok:=FindText(X+536, Y+30, X+747, Y+60, 0, 0, SaberTooth2))
@@ -141,50 +329,108 @@ global PetYaprak:="|<PetYaprak>##0$0/0/398C39,5/0/4A8C4A,-1/3/316B31,-5/4/317331
  ;}
 }
 
-
-
-
-
-
 ;{ Genel/Ortak
 
-PetFeed()
+UstteTut()
 {
-  PixelGetColor, pet70, X + 1243, Y + 81
-  PixelGetColor, pet50, X + 1200, Y + 81
-  PixelGetColor, pet30, X + 1160, Y + 81
-  if (pet70 = 0x4A526B)
+  if(tv_get(R1, "checked"))
   {
-    send, {p down}{p up}
-    Sleep, 2000
-    if (ok:=FindText(X+1041, Y+39, X+1160, Y+100, 0, 0, PetItemTab)) ; Item Tabi Aktif degilse Tikla
-    {
-      CoordMode, Mouse
-      Xx:=ok.1.x, Yy:=ok.1.y, Comment:=ok.1.id
-      Click, %Xx%, %Yy%
-      Sleep, 500
-    }
-    if (ok:=FindText(X+935, Y+273, X+1270, Y+465, 0, 0, PetYaprak)) ; Cantada Yapragi bul
-    {
-      CoordMode, Mouse
-      Xx:=ok.1.x, Yy:=ok.1.y, Comment:=ok.1.id
-      MouseClickDrag, L, %Xx%, %Yy%, X+1230, Y+185, 5
-      Sleep, 500
-    }
-    if (ok:=FindText(X+1073, Y+252, X+1162, Y+284, 0, 0, PetFeedConfirm)) ; Confrim butonuna tikla
-    {
-      CoordMode, Mouse
-      Xx:=ok.1.x, Yy:=ok.1.y, Comment:=ok.1.id
-      Click, %Xx%, %Yy%
-      Sleep, 500
-      send, {p down}{p up}
-    }
+    Winset, AlwaysOnTop, , Window
   }
 }
 
+PetFeed() ; Pet bari'in SAG-Ust kosede olmasi gerekiyor.
+{
+  if(tv_get(R2C5, "checked")) ;Pet besle.
+  {
+    PixelGetColor, pet70, X + 1243, Y + 81
+    PixelGetColor, pet50, X + 1200, Y + 81
+    PixelGetColor, pet30, X + 1160, Y + 81
+    if((tv_get(R2C5C1C1, "checked")) and pet70 = 0x4A526B) ; %70
+    ;if(pet70 = 0x4A526B)
+    {
+      send, {p down}{p up}
+      Sleep, 2000
+      if (ok:=FindText(X+1041, Y+39, X+1160, Y+100, 0, 0, PetItemTab)) ; Item Tabi Aktif degilse Tikla
+      {
+        CoordMode, Mouse
+        Xx:=ok.1.x, Yy:=ok.1.y, Comment:=ok.1.id
+        Click, %Xx%, %Yy%
+        Sleep, 500
+      }
+      
+      if ((tv_get(R2C5C1, "checked")) and (ok:=FindText(X+935, Y+273, X+1270, Y+465, 0, 0, PetYaprak))) ; yaprak
+      ;if (ok:=FindText(X+935, Y+273, X+1270, Y+465, 0, 0, PetYaprak)) ; Cantada Yapragi bul ve besleme kutucuguna surukle.
+      {
+        CoordMode, Mouse
+        Xx:=ok.1.x, Yy:=ok.1.y, Comment:=ok.1.id
+        MouseClickDrag, L, %Xx%, %Yy%, X+1230, Y+185, 5
+        Sleep, 500
+      }
+      
+      if (ok:=FindText(X+1073, Y+252, X+1162, Y+284, 0, 0, PetFeedConfirm)) ; Confrim butonuna tikla
+      {
+        CoordMode, Mouse
+        Xx:=ok.1.x, Yy:=ok.1.y, Comment:=ok.1.id
+        Click, %Xx%, %Yy%
+        Sleep, 500
+        send, {p down}{p up}
+      }
+    }
+  }
+    
+  if((tv_get(R2C5C1C2, "checked")) and pet50 = 0x4A526B) ; %50
+  {
+  ;if(pet50 = 0x4A526B)
+  }
+    
+  if((tv_get(R2C5C1C3, "checked")) and pet30 = 0x4A526B) ; %30
+  {
+  ;if(pet30 = 0x4A526B)
+  }
+}
+  
+
 HPpot()
 {
+  ;CoordMode Pixel, Screen	; CoordMode, ToolTip|Pixel|Mouse|Caret|Menu [, Screen|Window|Client]
+  PixelGetColor, hp90, X + 211, Y + 62
+  PixelGetColor, hp80, X + 182, Y + 62
+  PixelGetColor, hp70, X + 163, Y + 62
+  PixelGetColor, hp60, X + 144, Y + 62
+  PixelGetColor, hp50, X + 115, Y + 62
+  if(tv_get(R2C1C1, "checked") and hp90 != 0x100CFF) ; HP %90
+  ;if (hp90 != 0x100CFF)
+  {
+    ;ToolTip, %Hk%
+    send, {%Hk% down}{%Hk% up}{%Hk5% down}{%Hk5% up}
+  }
+  if(tv_get(R2C1C2, "checked") and hp80 != 0x100CFF) ; HP %80
+  ;if (hp90 != 0x100CFF)
+  {
+    ;ToolTip, %Hk%
+    send, {%Hk% down}{%Hk% up}{%Hk5% down}{%Hk5% up}
+  }
+  if(tv_get(R2C1C3, "checked") and hp70 != 0x100CFF) ; HP %70
+  ;if (hp90 != 0x100CFF)
+  {
+    ;ToolTip, %Hk%
+    send, {%Hk% down}{%Hk% up}{%Hk5% down}{%Hk5% up}
+  }
+  if(tv_get(R2C1C4, "checked") and hp60 != 0x100CFF) ; HP %60
+  ;if (hp90 != 0x100CFF)
+  {
+    ;ToolTip, %Hk%
+    send, {%Hk% down}{%Hk% up}{%Hk5% down}{%Hk5% up}
+  }
+  if(tv_get(R2C1C5, "checked") and hp50 != 0x100CFF) ; HP %50
+  ;if (hp90 != 0x100CFF)
+  {
+    ;ToolTip, %Hk%
+    send, {%Hk% down}{%Hk% up}{%Hk5% down}{%Hk5% up}
+  }
 }
+
 
 MPpot()
 {
@@ -208,7 +454,25 @@ Koordinat_degisirse()
   if (autograb = 1)
   {
     CoordMode, Pixel, Screen
-    ImageSearch, OutputVarX, OutputVarY, X+101, Y+103, X+152, Y+113, *90 koordinat.jpg
+    ImageSearch, OutputVarX, OutputVarY, X+101, Y+103, X+152, Y+113, *90 Mob1.jpg
+    If (ErrorLevel=0)
+    {
+      ToolTip, bulundu %W% %H%
+    }
+    else
+    {
+      ToolTip, bulunmadi
+    }
+  }
+}
+
+Mob_bul()
+{
+  gui,submit,NoHide
+  if (mobbul = 1)
+  {
+    CoordMode, Pixel, Screen
+    ImageSearch, OutputVarX, OutputVarY, X+624, Y+44, X+646, Y+50, *90 Mob1.jpg
     If (ErrorLevel=0)
     {
       ToolTip, bulundu %W% %H%
@@ -233,12 +497,26 @@ Koordinat_Al()
 CharNick_Al()
 {
   ButtonCharNickAL:
+  WinActivate, Knight OnLine Client
   snap := Gdip_BitmapFromScreen(X+609 . "|" . Y+356 . "|" . 66 . "|" . 12)
   Gdip_SaveBitmapToFile(snap, "CharNick.jpg")
   GuiControl,,  pic2 , CharNick.jpg  
   return
 }
-  
+
+Mob1_Al()
+{
+  ButtonMobAl:
+  WinActivate, Knight OnLine Client 
+  snap := Gdip_BitmapFromScreen(X+624 . "|" . Y+44 . "|" . 22 . "|" . 6)
+  Gdip_SaveBitmapToFile(snap, "Mob1.jpg")
+  GuiControl,,  pic2 , Mob1.jpg
+  MSGBox, 4, , 2. mob varmi,? Varsa Z 'ye aliniz, sonra YES tusuna basiniz.
+  IfMsgBox, Yes
+    snap := Gdip_BitmapFromScreen(X+624 . "|" . Y+44 . "|" . 22 . "|" . 6)
+    Gdip_SaveBitmapToFile(snap, "Mob2.jpg")
+  return  
+}
 
 
 Town_AT_mouse_Click()
@@ -341,7 +619,9 @@ PriestAtack()
  GuiClose:
  ExitApp
  
- 
+
+;========================================================================================================================================;
+
 ;{ Gdip Script editlemeyiniz !!!
 
 ; Gdip standard library v1.45 by tic (Tariq Porter) 07/09/11
@@ -3059,6 +3339,12 @@ StrGetB(Address, Length=-1, Encoding=0)
 }
 
 ;} End of Gdip SCript
+ 
+ 
+ 
+;========================================================================================================================================;
+
+ 
  
 ;{ FindText Script. Editlemeyiniz !!!!
 
