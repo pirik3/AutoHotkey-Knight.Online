@@ -408,31 +408,7 @@ MPpot() ;#DONE
   PixelGetColor, mp70, X + 163, Y + 79
   PixelGetColor, mp60, X + 144, Y + 79
   PixelGetColor, mp50, X + 115, Y + 79
-  if(tv_get(R2C2C1, "checked") and mp90 != 0x100CFF) ; MP %90
-  ;if (hp90 != 0x100CFF)
-  {
-    ;ToolTip, %Hk%
-    send, {%Hk2% down}{%Hk2% up}{%Hk6% down}{%Hk6% up}
-  }
-  if(tv_get(R2C2C2, "checked") and mp80 != 0x100CFF) ; MP %80
-  ;if (hp90 != 0x100CFF)
-  {
-    ;ToolTip, %Hk%
-    send, {%Hk2% down}{%Hk2% up}{%Hk6% down}{%Hk6% up}
-  }
-  if(tv_get(R2C2C3, "checked") and mp70 != 0x100CFF) ; MP %70
-  ;if (hp90 != 0x100CFF)
-  {
-    ;ToolTip, %Hk%
-    send, {%Hk2% down}{%Hk2% up}{%Hk6% down}{%Hk6% up}
-  }
-  if(tv_get(R2C2C4, "checked") and mp60 != 0x100CFF) ; MP %60
-  ;if (hp90 != 0x100CFF)
-  {
-    ;ToolTip, %Hk%
-    send, {%Hk2% down}{%Hk2% up}{%Hk6% down}{%Hk6% up}
-  }
-  if(tv_get(R2C2C5, "checked") and mp50 != 0x100CFF) ; MP %50
+  if(tv_get(R2C2C1, "checked") and mp90 != 0x100CFF) or (tv_get(R2C2C2, "checked") and mp80 != 0x100CFF) or (tv_get(R2C2C3, "checked") and mp70 != 0x100CFF) or (tv_get(R2C2C4, "checked") and mp60 != 0x100CFF) or if(tv_get(R2C2C5, "checked") and mp50 != 0x100CFF) ; MP
   ;if (hp90 != 0x100CFF)
   {
     ;ToolTip, %Hk%
