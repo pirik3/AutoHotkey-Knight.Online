@@ -213,6 +213,10 @@ global R2C7C1 := TV_Add("Kecoon.", R2C7)
 global R2C7C2 := TV_Add("Bowman.", R2C7)
 global R2C7C3 := TV_Add("Deatch Knight.", R2C7)
 global R2C7C4 := TV_Add("Burning Skeleton.", R2C7)
+global R2C8 := TV_Add("Events.", R2)
+global R2C8C1 := TV_Add("Forgotten Temple.", R2C8)
+global R2C8C2 := TV_Add("Juraid Mountain.", R2C8)
+global R2C8C3 := TV_Add("Border Def. War.", R2C8)
 global R3 := TV_Add("Rogue.", R3)
 global R3C1 := TV_Add("Wolf kullan.", R3)
 global R3C2 := TV_Add("Light Feet kullan.", R3)
@@ -344,7 +348,7 @@ TSc()
  ;}
 }
 
-;{ Genel/Ortak
+;{ Genel/Ortak [EKSIK -> repair, events]
 
 UstteTut() ;tamam
 {
@@ -708,11 +712,6 @@ Mob_Al() ;tamam
   return  
 }
 
-
-Town_AT_mouse_Click()
-{
-}
-
 Event_FT()
 {
 }
@@ -744,7 +743,7 @@ Wolf()
     {
     ;CoordMode, Mouse
     ;X:=ok.1.x, Y:=ok.1.y, Comment:=ok.1.id8
-    ToolTip, bulundu ; , 0, 0
+    ;ToolTip, bulundu ; , 0, 0
     }
     else
     {
