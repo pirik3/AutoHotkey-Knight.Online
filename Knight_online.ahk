@@ -20,12 +20,15 @@
 ; #Include Gdip.ahk
 
 ; Ensures that there is only a single instance of this script running
+;=========================================================================================
+
 #SingleInstance, Force
-setworkingdir,%a_scriptdir%
+SetWorkingDir %A_ScriptDir%
+if not A_IsAdmin
+	Run *RunAs "%A_ScriptFullPath%" ; (A_AhkPath is usually optional if the script has the .ahk extension.) You would typically check  first.
 CoordMode Pixel, Window	; CoordMode, ToolTip|Pixel|Mouse|Caret|Menu [, Screen|Window|Client]
 pToken := Gdip_Startup()
-
- t1:=A_TickCount, X:=Y:=""
+t1:=A_TickCount, X:=Y:=""
 
 ;{=====================GUI====================================================================;
 Gui Font, s9, Segoe UI
@@ -35,7 +38,7 @@ Gui Add, Button, hWndhBtnKoordinatAl3 vBtnKoordinatAl3 x232 y312 w80 h23, Koordi
 Gui Add, Button, hWndhBtnNickAl4 vBtnNickAl4 x232 y336 w80 h23, Nick Al
 Gui Add, Button, hWndhBtnOku5 vBtnOku5 x312 y312 w80 h23, OKU
 Gui Add, TreeView, x2 y3 w228 h391 -ReadOnly AltSubmit Checked
-Gui Add, Tab3, x232 y8 w167 h305, Genel|Atak|Rogue|Priest|Warr.|Mage|LOG
+Gui Add, Tab3, x232 y8 w167 h305, Genel|Atak|Rogue|Priest|Warr.|Mage|LOG|PK
 Gui Tab, 1
 Gui Add, Text, x240 y72 w50 h23 +0x200, HP pot >
 Gui Add, Hotkey, hWndhHk5 vHk x296 y72 w18 h23, F1
@@ -176,7 +179,7 @@ Gui Tab
 Gui Show, w402 h397, K.O. Yardimci
 ;{ ===================TreeView====Inner=Text==========================================;
 global R1 := TV_Add("Ustte tut." , R1)
-global R2 := TV_Add("Genel." , R2) 
+global R2 := TV_Add("Genel.[EKSIK -> repair, events]" , R2) 
 global R2C1 := TV_Add("HP doldur." , R2)  
 global R2C1C1 := TV_Add("HP pot/minor/heal %90.",R2C1) 
 global R2C1C2 := TV_Add("HP pot/minor/heal %80.", R2C1)
@@ -248,6 +251,15 @@ global R7C8 := TV_Add("Mob sec.[Devre Disi, Mob Al butonunu kullaniniz.]", R7)
 global R7C8C1 := TV_Add("Paramun.", R7C8)
 global R7C8C1 := TV_Add("Shadow Seeker.", R7C8)
 global R7C8C1 := TV_Add("Ape.", R7C8)
+global R8 := TV_Add("PK.", R8)
+global R8C1 := TV_Add("Kalkan tak, 1.slot -> hotkey ile.", R8)
+global R8C2 := TV_Add("Slide at -> hotkey ile.", R8)
+global R8C3 := TV_Add("Combo yap, butun classlar icin -> hotkey ile.", R8)
+global R8C4 := TV_Add("Descent at ve yere vur x3 -> hotkey ile.", R8)
+global R8C5 := TV_Add("Yere vur, x4 skill -> hotkey ile.", R8)
+global R8C6 := TV_Add("Kilic bas.", R8)
+global R8C7 := TV_Add("Frenzy bas.", R8)
+
 ;}=======================TreeView==Inner=Text====================================;
 ;}==================END=of=GUI==================================================
 
@@ -326,23 +338,23 @@ global PetYaprak:="|<PetYaprak>##0$0/0/398C39,5/0/4A8C4A,-1/3/316B31,-5/4/317331
  {
  
  ;{ pencere koordinatlari, dongude kalmali.
- WinGetPos, X, Y, W, H, Knight OnLine Client
- global X:=X
- global Y:=Y
- global W:=W
- global H:=H
+ ;WinGetPos, X, Y, W, H, Knight OnLine Client
+ ;global X:=X
+ ;global Y:=Y
+ ;global W:=W
+ ;global H:=H
  ;}
 
 Gui, Submit, NoHide
+CoordMode Pixel, Window	
 
- 
 UstteTut()
 HPpot()
 Koordinat_degisirse()
 Partiden_cikarsam()
 TSc()
  
- ;if (ok:=FindText(X+536, Y+30, X+747, Y+60, 0, 0, SaberTooth2))
+ ;if (ok:=FindText(536, 30, 747, 60, 0, 0, SaberTooth2))
  ;{
  ;PriestAtack()
  ;}
@@ -362,15 +374,15 @@ PetFeed() ;denenmedi. Pet bari'in SAG-Ust kosede olmasi gerekiyor.
 {
   if(tv_get(R2C5, "checked")) ;Pet besle.
   {
-    PixelGetColor, pet70, X + 1243, Y + 81
-    PixelGetColor, pet50, X + 1200, Y + 81
-    PixelGetColor, pet30, X + 1160, Y + 81
+    PixelGetColor, pet70, 1243, 81
+    PixelGetColor, pet50, 1200, 81
+    PixelGetColor, pet30, 1160, 81
     if(tv_get(R2C5C1C1, "checked") and pet70 = 0x4A526B) or (tv_get(R2C5C1C2, "checked") and pet50 = 0x4A526B) or (tv_get(R2C5C1C3, "checked") and pet30 = 0x4A526B) ; pet -> %70 / %50 / %30
     ;if(pet70 = 0x4A526B)
     {
       send, {p down}{p up}
       Sleep, 2000
-      if (ok:=FindText(X+1041, Y+39, X+1160, Y+100, 0, 0, PetItemTab)) ; Item Tabi Aktif degilse Tikla
+      if (ok:=FindText(1041, 39, 1160, 100, 0, 0, PetItemTab)) ; Item Tabi Aktif degilse Tikla
       {
         CoordMode, Mouse
         Xx:=ok.1.x, Yy:=ok.1.y, Comment:=ok.1.id
@@ -378,16 +390,16 @@ PetFeed() ;denenmedi. Pet bari'in SAG-Ust kosede olmasi gerekiyor.
         Sleep, 500
       }
       
-      if ((tv_get(R2C5C1, "checked") and (ok:=FindText(X+935, Y+273, X+1270, Y+465, 0, 0, PetYaprak)))) ; yaprak
-      ;if (ok:=FindText(X+935, Y+273, X+1270, Y+465, 0, 0, PetYaprak)) ; Cantada Yapragi bul ve besleme kutucuguna surukle.
+      if ((tv_get(R2C5C1, "checked") and (ok:=FindText(935, 273, 1270, 465, 0, 0, PetYaprak)))) ; yaprak
+      ;if (ok:=FindText(935, 273, 1270, 465, 0, 0, PetYaprak)) ; Cantada Yapragi bul ve besleme kutucuguna surukle.
       {
         CoordMode, Mouse
         Xx:=ok.1.x, Yy:=ok.1.y, Comment:=ok.1.id
-        MouseClickDrag, L, %Xx%, %Yy%, X+1230, Y+185, 5
+        MouseClickDrag, L, %Xx%, %Yy%, 1230, 185, 5
         Sleep, 500
       }
       
-      if (ok:=FindText(X+1073, Y+252, X+1162, Y+284, 0, 0, PetFeedConfirm)) ; Confrim butonuna tikla
+      if (ok:=FindText(1073, 252, 1162, 284, 0, 0, PetFeedConfirm)) ; Confrim butonuna tikla
       {
         CoordMode, Mouse
         Xx:=ok.1.x, Yy:=ok.1.y, Comment:=ok.1.id
@@ -402,16 +414,17 @@ PetFeed() ;denenmedi. Pet bari'in SAG-Ust kosede olmasi gerekiyor.
 
 HPpot() ;tamam
 {
-  ;CoordMode Pixel, Screen	; CoordMode, ToolTip|Pixel|Mouse|Caret|Menu [, Screen|Window|Client]
-  PixelGetColor, hp90, X + 211, Y + 62
-  PixelGetColor, hp80, X + 182, Y + 62
-  PixelGetColor, hp70, X + 163, Y + 62
-  PixelGetColor, hp60, X + 144, Y + 62
-  PixelGetColor, hp50, X + 115, Y + 62
+  ;CoordMode Pixel, Window	; CoordMode, ToolTip|Pixel|Mouse|Caret|Menu [, Screen|Window|Client]
+  PixelGetColor, hp90,  211,  62
+  PixelGetColor, hp80,  182,  62
+  PixelGetColor, hp70,  163,  62
+  PixelGetColor, hp60,  144,  62
+  PixelGetColor, hp50,  115,  62
   if(tv_get(R2C1C1, "checked") and hp90 != 0x100CFF) or (tv_get(R2C1C2, "checked") and hp80 != 0x100CFF) or (tv_get(R2C1C3, "checked") and hp70 != 0x100CFF) or (tv_get(R2C1C4, "checked") and hp60 != 0x100CFF) or (tv_get(R2C1C5, "checked") and hp50 != 0x100CFF) ; HP
   ;if (hp90 != 0x100CFF)
   {
     ;ToolTip, %Hk%
+    WinActivate, Knight OnLine Client
     send, {%Hk% down}{%Hk% up}{%Hk5% down}{%Hk5% up}
   }
 }
@@ -420,15 +433,16 @@ HPpot() ;tamam
 MPpot() ;tamam
 {
   ;CoordMode Pixel, Screen	; CoordMode, ToolTip|Pixel|Mouse|Caret|Menu [, Screen|Window|Client]
-  PixelGetColor, mp90, X + 211, Y + 79
-  PixelGetColor, mp80, X + 182, Y + 79
-  PixelGetColor, mp70, X + 163, Y + 79
-  PixelGetColor, mp60, X + 144, Y + 79
-  PixelGetColor, mp50, X + 115, Y + 79
-  if(tv_get(R2C2C1, "checked") and mp90 != 0x100CFF) or (tv_get(R2C2C2, "checked") and mp80 != 0x100CFF) or (tv_get(R2C2C3, "checked") and mp70 != 0x100CFF) or (tv_get(R2C2C4, "checked") and mp60 != 0x100CFF) or (tv_get(R2C2C5, "checked") and mp50 != 0x100CFF) ; MP %90
-  ;if (hp90 != 0x100CFF)
+  PixelGetColor, mp90,  211,  79
+  PixelGetColor, mp80,  182,  79
+  PixelGetColor, mp70,  163,  79
+  PixelGetColor, mp60,  144,  79
+  PixelGetColor, mp50,  115,  79
+  if(tv_get(R2C2C1, "checked") and mp90 != 0xFF4D17) or (tv_get(R2C2C2, "checked") and mp80 != 0xFF4D17) or (tv_get(R2C2C3, "checked") and mp70 != 0xFF4D17) or (tv_get(R2C2C4, "checked") and mp60 != 0xFF4D17) or (tv_get(R2C2C5, "checked") and mp50 != 0xFF4D17) ; MP %90
+  ;if (hp90 != 0xFF4D17)
   {
     ;ToolTip, %Hk%
+    WinActivate, Knight OnLine Client
     send, {%Hk2% down}{%Hk2% up}{%Hk6% down}{%Hk6% up}
   }
 }
@@ -443,19 +457,19 @@ TSc() ;tamam, hata olabiliyor ama calisiyor.
   {
     CoordMode Pixel, Window
     WinActivate, Knight OnLine Client
-    if (ok:=FindText(X+246, Y+24, X+1006, Y+70, 0, 0, TransSC))
+    if (ok:=FindText(246, 24, 1006, 70, 0, 0, TransSC))
     {}
     else
     {
       Send, {%Hk4% down}{%Hk4% up}{%Hk6% down}{%Hk6% up}
       Sleep, 3000
-      PixelGetColor, TS_pencere_kontrol, X+1205, Y+81
+      PixelGetColor, TS_pencere_kontrol, 1205, 81
       if (TS_pencere_kontrol = 0xCC2299)
       {
         ;MouseClick, left, 1148, 574
         Send, {Enter Down}{Enter up}
         Sleep, 2000
-        PixelGetColor, TS_enter_kontrol, X+521, Y+379
+        PixelGetColor, TS_enter_kontrol, 521, 379
         if (TS_enter_kontrol = 0xFFFF80)
         {
           ;MouseClick, left, 579, 444
@@ -470,30 +484,30 @@ TSc() ;tamam, hata olabiliyor ama calisiyor.
   {
     CoordMode Pixel, Window
     WinActivate, Knight OnLine Client
-    ;PixelSearch, OutputVarX, OutputVarY, X+637, Y+361, X+651, Y+370, 0xFFD264
-    if (ok:=FindText(X+246, Y+24, X+1006, Y+70, 0, 0, TransSC))
+    ;PixelSearch, OutputVarX, OutputVarY, 637, 361, 651, 370, 0xFFD264
+    if (ok:=FindText(246, 24, 1006, 70, 0, 0, TransSC))
     ;if (!ErrorLevel)
     {}
     else
     {
       Send, {%Hk4% down}{%Hk4% up}{%Hk6% down}{%Hk6% up}
       Sleep, 2000
-      PixelGetColor, TS_pencere_kontrol, X+1205, Y+81
+      PixelGetColor, TS_pencere_kontrol, 1205, 81
       if (TS_pencere_kontrol = 0xCC2299)
       {
         Send, {Tab Down}{Tab up}
         Sleep, 500
-        PixelGetColor, TS_tab_kontrol, X+1122, Y+355
+        PixelGetColor, TS_tab_kontrol, 1122, 355
         if (TS_tab_kontrol = 0x00FFFF) ;sari kare
         {
           Send,{Down Down}{Down up} Sleep 10 {Down Down}{Down up}
           Sleep, 500
-          PixelGetColor, TS_bowman_kontrol, X+1203, Y+333
+          PixelGetColor, TS_bowman_kontrol, 1203, 333
           if (TS_bowman_kontrol = 0x00FF00) ;yesil kare
           {
             Send, {Enter Down}{Enter up}
             Sleep, 1000
-            PixelGetColor, TS_enter_kontrol, X+521, Y+379
+            PixelGetColor, TS_enter_kontrol, 521, 379
             if (TS_enter_kontrol = 0xFFFF80)
             {
               Send, {Enter Down}{Enter up}
@@ -509,30 +523,30 @@ TSc() ;tamam, hata olabiliyor ama calisiyor.
   {
     CoordMode Pixel, Window
     WinActivate, Knight OnLine Client
-    ;PixelSearch, OutputVarX, OutputVarY, X+637, Y+361, X+651, Y+370, 0xFFD264
-    if (ok:=FindText(X+246, Y+24, X+1006, Y+70, 0, 0, TransSC))
+    ;PixelSearch, OutputVarX, OutputVarY, 637, 361, 651, 370, 0xFFD264
+    if (ok:=FindText(246, 24, 1006, 70, 0, 0, TransSC))
     ;if (!ErrorLevel)
     {}
     else
     {
       Send, {%Hk4% down}{%Hk4% up}{%Hk6% down}{%Hk6% up}
       Sleep, 2000
-      PixelGetColor, TS_pencere_kontrol, X+1205, Y+81
+      PixelGetColor, TS_pencere_kontrol, 1205, 81
       if (TS_pencere_kontrol = 0xCC2299)
       {
         Send,{Down Down}{Down up} Sleep 10 {Down Down}{Down up} Sleep 10 {Down Down}{Down up}
         Sleep, 500
-        PixelGetColor, TS_DK_kontrol, X+1231, Y+136
+        PixelGetColor, TS_DK_kontrol, 1231, 136
         if (TS_DK_kontrol = 0x00FF00) ;yesil kare
         {
           Send, {Tab Down}{Tab up}
           Sleep, 500
-          PixelGetColor, TS_tab_kontrol, X+1122, Y+355
+          PixelGetColor, TS_tab_kontrol, 1122, 355
           if (TS_tab_kontrol = 0x00FFFF) ;sari kare
           {
             Send, {Enter Down}{Enter up}
             Sleep, 1000
-            PixelGetColor, TS_enter_kontrol, X+521, Y+379
+            PixelGetColor, TS_enter_kontrol, 521, 379
             if (TS_enter_kontrol = 0xFFFF80)
             {
               Send, {Enter Down}{Enter up}
@@ -548,35 +562,35 @@ TSc() ;tamam, hata olabiliyor ama calisiyor.
   {
     CoordMode Pixel, Window
     WinActivate, Knight OnLine Client
-    ;PixelSearch, OutputVarX, OutputVarY, X+637, Y+361, X+651, Y+370, 0xFFD264
-    if (ok:=FindText(X+246, Y+24, X+1006, Y+70, 0, 0, TransSC))
+    ;PixelSearch, OutputVarX, OutputVarY, 637, 361, 651, 370, 0xFFD264
+    if (ok:=FindText(246, 24, 1006, 70, 0, 0, TransSC))
     ;if (!ErrorLevel)
     {}
     else
     {
       Send, {%Hk4% down}{%Hk4% up}{%Hk6% down}{%Hk6% up}
       Sleep, 3000
-      PixelGetColor, TS_pencere_kontrol, X+1205, Y+81
+      PixelGetColor, TS_pencere_kontrol, 1205, 81
       if (TS_pencere_kontrol = 0xCC2299)
       {
         Send,{Down Down}{Down up} Sleep 10 {Down Down}{Down up} Sleep 10 {Down Down}{Down up} Sleep 10 {Down Down}{Down up}
         Sleep, 500
-        PixelGetColor, TS_lvl50_kontrol, X+1231, Y+149
+        PixelGetColor, TS_lvl50_kontrol, 1231, 149
         if (TS_lvl50_kontrol = 0x00FF00) ;level 50 yesil kare
         {
           Send, {Tab Down}{Tab up}
           Sleep, 500
-          PixelGetColor, TS_tab_kontrol, X+1122, Y+355
+          PixelGetColor, TS_tab_kontrol, 1122, 355
           if (TS_tab_kontrol = 0x00FFFF) ;sari kare
           {
             Send,{Down Down}{Down up}
             Sleep, 1000
-            PixelGetColor, TS_BS_kontrol, X+1231, Y+333
+            PixelGetColor, TS_BS_kontrol, 1231, 333
             if (TS_BS_kontrol = 0x00FF00) ;ts selection yesil kjare
             {
               Send, {Enter Down}{Enter up}
               Sleep, 100
-              PixelGetColor, TS_enter_kontrol, X+521, Y+379
+              PixelGetColor, TS_enter_kontrol, 521, 379
               if (TS_enter_kontrol = 0xFFFF80)
               {
                 Send, {Enter Down}{Enter up}
@@ -595,19 +609,19 @@ Partiden_cikarsam() ;tamam.
   if(tv_get(R2C4C1, "checked")) ;/Town yazarak town at. Lagli olunca surekli /Town yaziyor, kullanmaniz tavsiye edilmez ama islevi var.
   {
     WinActivate, Knight OnLine Client
-    PixelSearch, OutputVarX, OutputVarY, X+637, Y+361, X+651, Y+370, 0x00FFFF
-    ;ImageSearch, OutputVarXx, OutputVarYy, X+593, Y+355, X+689, Y+374, *50 CharNick.jpg
+    PixelSearch, OutputVarX, OutputVarY, 637, 361, 651, 370, 0x00FFFF
+    ;ImageSearch, OutputVarXx, OutputVarYy, 593, 355, 689, 374, *50 CharNick.jpg
     if (ErrorLevel) 
     {
       ;CoordMode, Pixel, Window
       Send, {Enter Down}{Enter up}
-      PixelGetColor, imlec_check, X+43, Y+705
-      ;PixelSearch, OutputVarX, OutputVarY, X+43, Y+705, X+43, Y+705, 0xFFFFFF ; Enter imlec kontrol.
+      PixelGetColor, imlec_check, 43, 705
+      ;PixelSearch, OutputVarX, OutputVarY, 43, 705, 43, 705, 0xFFFFFF ; Enter imlec kontrol.
       if (imlec_check = 0xFFFFFF)
       {
         Send, /Town
-        PixelGetColor, town_check, X + 86, Y + 703
-        ;PixelSearch, OutputVarX, OutputVarY, X+86, Y+703, X+86, Y+703, 0xFFFFFF ; /Town yazisi kontrol.
+        PixelGetColor, town_check,  86,  703
+        ;PixelSearch, OutputVarX, OutputVarY, 86, 703, 86, 703, 0xFFFFFF ; /Town yazisi kontrol.
         if (town_check = 0xFFFFFF)
         {
           Send, {Enter Down}{Enter up}
@@ -620,8 +634,8 @@ Partiden_cikarsam() ;tamam.
   if(tv_get(R2C4C2, "checked")) ;Gate skill ile town at.
   {
     WinActivate, Knight OnLine Client
-    PixelSearch, OutputVarX, OutputVarY, X+637, Y+361, X+651, Y+370, 0x00FFFF
-    ;ImageSearch, OutputVarXx, OutputVarYy, X+593, Y+355, X+689, Y+374, *50 CharNick.jpg
+    PixelSearch, OutputVarX, OutputVarY, 637, 361, 651, 370, 0x00FFFF
+    ;ImageSearch, OutputVarXx, OutputVarYy, 593, 355, 689, 374, *50 CharNick.jpg
     if (ErrorLevel) 
     {
       ;CoordMode, Pixel, Window
@@ -633,8 +647,8 @@ Partiden_cikarsam() ;tamam.
   if(tv_get(R2C4C3, "checked")) ;MouseClick ile town at.
   {
     WinActivate, Knight OnLine Client
-    PixelSearch, OutputVarX, OutputVarY, X+637, Y+361, X+651, Y+370, 0x00FFFF
-    ;ImageSearch, OutputVarXx, OutputVarYy, X+593, Y+355, X+689, Y+374, *50 CharNick.jpg
+    PixelSearch, OutputVarX, OutputVarY, 637, 361, 651, 370, 0x00FFFF
+    ;ImageSearch, OutputVarXx, OutputVarYy, 593, 355, 689, 374, *50 CharNick.jpg
     if (ErrorLevel) 
     {
       ;CoordMode, Pixel, Window
@@ -650,7 +664,7 @@ Koordinat_degisirse() ;tamam
   if(tv_get(R2C3, "checked"))
   {
     WinActivate, Knight OnLine Client
-    ImageSearch, OutputVarX, OutputVarY, X+63, Y+104, X+157, Y+112, *50 koordinat.jpg
+    ImageSearch, OutputVarX, OutputVarY, 63, 104, 157, 112, *50 koordinat.jpg
     If (ErrorLevel=1)
     {
       WinActivate, K.O. Yardimci
@@ -665,7 +679,7 @@ Mob_bul()
   if (mobbul = 1)
   {
     CoordMode, Pixel, Screen
-    ImageSearch, OutputVarX, OutputVarY, X+624, Y+44, X+646, Y+50, *90 Mob1.jpg
+    ImageSearch, OutputVarX, OutputVarY, 624, 44, 646, 50, *90 Mob1.jpg
     If (ErrorLevel=0)
     {
       ToolTip, bulundu %W% %H%
@@ -681,7 +695,7 @@ Koordinat_Al() ;tamam
 {
   ButtonKoordinatAl:
   WinActivate, Knight OnLine Client  
-  snap := Gdip_BitmapFromScreen(X+63 . "|" . Y+104 . "|" . 94 . "|" . 8)
+  snap := Gdip_BitmapFromScreen(63 . "|" . 104 . "|" . 94 . "|" . 8)
   Gdip_SaveBitmapToFile(snap, "koordinat.jpg")
   ;GuiControl,,  pic , koordinat.jpg  
   return  
@@ -691,7 +705,7 @@ CharNick_Al() ;tamam
 {
   ButtonNickAL:
   WinActivate, Knight OnLine Client
-  snap := Gdip_BitmapFromScreen(X+608 . "|" . Y+361 . "|" . 67 . "|" . 10)
+  snap := Gdip_BitmapFromScreen(608 . "|" . 361 . "|" . 67 . "|" . 10)
   Gdip_SaveBitmapToFile(snap, "CharNick.jpg")
   ;GuiControl,,  pic2 , CharNick.jpg  
   return
@@ -701,13 +715,13 @@ Mob_Al() ;tamam
 {
   ButtonMobAl:
   WinActivate, Knight OnLine Client 
-  mob1 := Gdip_BitmapFromScreen(X+624 . "|" . Y+44 . "|" . 22 . "|" . 6)
+  mob1 := Gdip_BitmapFromScreen(624 . "|" . 44 . "|" . 22 . "|" . 6)
   Gdip_SaveBitmapToFile(mob1, "Mob1.jpg")
   ;GuiControl,,  pic2 , Mob1.jpg
   MSGBox, 4, , 2. mob varmi,? Varsa Z 'ye aliniz, sonra YES tusuna basiniz.
   IfMsgBox, Yes
     WinGetPos, X, Y, W, H, Knight OnLine Client
-    mob2 := Gdip_BitmapFromScreen(X+624 . "|" . Y+44 . "|" . 22 . "|" . 6)
+    mob2 := Gdip_BitmapFromScreen(624 . "|" . 44 . "|" . 22 . "|" . 6)
     Gdip_SaveBitmapToFile(mob2, "Mob2.jpg")
   return  
 }
@@ -739,7 +753,7 @@ Pencerekontrol()
 
 Wolf()
 {
-    if (ok:=FindText(X+246, Y+24, X+1006, Y+70, 0, 0, wolf))
+    if (ok:=FindText(246, 24, 1006, 70, 0, 0, wolf))
     {
     ;CoordMode, Mouse
     ;X:=ok.1.x, Y:=ok.1.y, Comment:=ok.1.id8
@@ -760,7 +774,7 @@ Wolf()
 
 priestkitap()
 {
-  if (ok:=FindText(X+253, Y+24, X+1000, Y+60, 0, 0, priestkitap))
+  if (ok:=FindText(253, 24, 1000, 60, 0, 0, priestkitap))
   {
   ;CoordMode, Mouse
   ;X:=ok.1.x, Y:=ok.1.y, Comment:=ok.1.id8
@@ -777,7 +791,7 @@ priestkitap()
 
 str30()
 {
-  if (ok:=FindText(X+253, Y+24, X+1000, Y+60, 0, 0, str30))
+  if (ok:=FindText(253, 24, 1000, 60, 0, 0, str30))
   {
   ;CoordMode, Mouse
   ;X:=ok.1.x, Y:=ok.1.y, Comment:=ok.1.id8
@@ -6391,4 +6405,3 @@ SavePic    = SavePic = Select a range and save as a picture
 
 ;
 ;}
-
