@@ -714,10 +714,12 @@ CharNick_Al() ;tamam
 Mob_Al() ;tamam
 {
   ButtonMobAl:
-  WinActivate, Knight OnLine Client 
-  mob1 := Gdip_BitmapFromScreen(624 . "|" . 44 . "|" . 22 . "|" . 6)
-  Gdip_SaveBitmapToFile(mob1, "Mob1.jpg")
-  ;GuiControl,,  pic2 , Mob1.jpg
+  MSGBox, 4, , 1. mobu 'Z' ye aliniz. Sonra 'YES' tusuna basiniz.
+  IfMsgBox, Yes
+    WinActivate, Knight OnLine Client 
+    mob1 := Gdip_BitmapFromScreen(624 . "|" . 44 . "|" . 22 . "|" . 6)
+    Gdip_SaveBitmapToFile(mob1, "Mob1.jpg")
+    ;GuiControl,,  pic2 , Mob1.jpg
   MSGBox, 4, , 2. mob varmi,? Varsa Z 'ye aliniz, sonra YES tusuna basiniz.
   IfMsgBox, Yes
     WinGetPos, X, Y, W, H, Knight OnLine Client
