@@ -9,6 +9,7 @@
 ;  Date    : 02/12/2022
 ;
 ;  Usage:  *Script'i admin modda calistiriniz
+;	    KO penceresi 1600x900 cozunurlukte olmali bu script icin.
 ;
 ;  Hotkeys: [F1] ile koordinat ve fiyat secimini baslatiniz
 ;			[Home] pazar kurma islemini baslat.
