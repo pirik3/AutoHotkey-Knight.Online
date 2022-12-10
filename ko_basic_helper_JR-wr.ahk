@@ -12,7 +12,8 @@
 ;           [2] JR ye tiklama islemi;
 ;               [2.1] ilk olarak JR NPC sinden etkinlik icin "I see" penceresini acik tutunuz.
 ;               [2.2] mouse imlecinizi "I see" butonunun uzerine getiriniz.
-;               [2.3] klavyeden "Delete" tusuna basiniz. 
+;               [2.3] klavyeden "Delete" tusuna basiniz. JR zamani geldiginde mouse butonu birakacaktir. Her ihtimale karsi imleci gozlemleyin tikladigina dair
+;			renk degisikli olmasi lazim imlecte.
 ;
 ;  Hotkeys: [Delete] - JR baslat.
 ;			[Home] - cikis yap
