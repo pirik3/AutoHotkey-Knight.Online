@@ -8,7 +8,7 @@
 ;  Version : 1.0
 ;  Date    : 10/12/2022
 ;
-;  Usage:   [1] ekran cozunurlugunuz 1699 x 900 olmali, ve knight penceresi sol ustte kalmali.
+;  Usage:   [1] ekran cozunurlugunuz 1699 x 900 olmali, ve knight penceresi sol ustte kalmali, orjinal ilk acildigi yerde.
 ;           [2] JR ye tiklama islemi;
 ;               [2.1] ilk olarak JR NPC sinden etkinlik icin "I see" penceresini acik tutunuz.
 ;               [2.2] mouse imlecinizi "I see" butonunun uzerine getiriniz.
@@ -36,7 +36,7 @@ t1:=A_TickCount, Text:=X:=Y:=""
 dks:="|<dks>##0$0/0/F4E0B3,-1/-1/E6D0B2,-2/-2/E2DBC7,-3/-3/D6D9B7"
 kalkan_selfname:="|<kalkan_selfname>FFFFEE-000000$21.0000000000000000000000000000000003E008002k00900000050000000000000000000004"
 
-WinMove, Knight OnLine Client, ,0, 0, 1600, 900
+WinMove, Knight OnLine Client, ,0, 0, 1600, 900 ; windowun yerini degistirmek icin.
 
 CapsLock::
 Loop
