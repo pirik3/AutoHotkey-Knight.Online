@@ -16,7 +16,7 @@
 ;			renk degisikli olmasi lazim imlecte.
 ;
 ;  Hotkeys: [Delete] - JR baslat.
-;			[Home] - cikis yap
+;	    [Home] - cikis yap
 ;           [CapsLock] - KAlkan tak.
 ;           [Shift] - silah tak.
 ;
