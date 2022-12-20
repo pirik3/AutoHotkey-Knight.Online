@@ -10,6 +10,7 @@
 ;
 ;  Usage   : [1]- Knight Online Grafik ayarlarini 1600x900 olarak yapiniz.
 ;            [2]- KO penceresi acildigi yerde sol ust kosede kalmali.
+;            [3]- Karaktere tepeden bakinca (Home tusu) daha iyi calisiyor gibi.
 ;            
 ;  Added   : -
 ;
