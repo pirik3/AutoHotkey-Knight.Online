@@ -49,7 +49,6 @@ Loop
 
 otoloot_ko()
 {  
-  i := 1
   if (ok:=FindText(X, Y, 860-150000, 497-150000, 860+150000, 497+150000, 0, 0, kutu))
   {
     MouseClick, Right, X, Y
@@ -66,7 +65,7 @@ otoloot_ko()
       Sleep,100
     }
     if (RadioButton3){ ;X/Y duzleminde
-      
+      ;~ i := 1
       ;~ memory := [100, 200, 300, 400]
       ;~ MouseClick,, memory[i], memory[i + 1] 
       ;~ i += 2
