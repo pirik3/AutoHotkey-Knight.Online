@@ -1,6 +1,6 @@
 ;/*
 ;===========================================
-;  Knight online Macro OTO KUTU
+;  Knight online OTO KUTU
 ;  https://pirik3.blogspot.com/
 ;  onlinehile.com
 ;
