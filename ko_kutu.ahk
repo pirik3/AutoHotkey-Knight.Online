@@ -27,6 +27,7 @@ CoordMode Pixel, Window	; CoordMode, ToolTip|Pixel|Mouse|Caret|Menu [, Screen|Wi
 
 t1:=A_TickCount, X:=Y:=""
 
+Gui -MinimizeBox -MaximizeBox
 Gui Font, s9, Segoe UI
 Gui Add, GroupBox, x8 y0 w134 h157, Kutu AC [sag-click]
 Gui Add, Radio, hWndhRadRadioButton1 vRadioButton1 x16 y24 w120 h23, Rastgele.
