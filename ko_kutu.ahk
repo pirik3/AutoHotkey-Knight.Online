@@ -34,7 +34,7 @@ Gui Add, Radio, hWndhRadRadioButton1 vRadioButton1 x16 y24 w120 h23, Rastgele.
 Gui Add, Radio, hWndhRadRadioButton2 vRadioButton2 x16 y56 w120 h23, Tek bir koord..
 Gui Add, Radio, hWndhRadRadioButton3 vRadioButton3 x16 y88 w120 h23 +Disabled, x/y duzleminde.
 Gui Add, Radio, hWndhRadRadioButton4 vRadioButton4 x16 y120 w120 h23 +Disabled, x/y/z
-Gui Show, w150 h165, Window
+Gui Show, w150 h165, KO yardimci
 
 global RadioButton1,RadioButton2,RadioButton3,RadioButton4
 
