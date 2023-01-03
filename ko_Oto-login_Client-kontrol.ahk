@@ -100,8 +100,8 @@ OtoLogin() ; Kosullamalarda duzenlemeler yapilmasi lazim, karisik duruyor.
       WinActivate, ahk_exe Launcher.exe ; Start buton click
       if (ok:=FindText(X, Y, 980-150000, 731-150000, 980+150000, 731+150000, 0, 0, Launcher_start))
       {
-        FindText().Click(X, Y, "L")
-        FindText().Click(X-10, Y-10, "L")
+        FindText().Click(X, Y, "L")		 
+        FindText().Click(X-10, Y-10, "L") ; Mouse bazen start butonu uzerinde takiliyor, bunu engellemek icin imlecin oynamasi lazim, buradaki kod bunun icin.
         Sleep, 2000
       }
     }
