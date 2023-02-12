@@ -1,3 +1,21 @@
+;/*
+;===========================================
+;  Knight online Macro bot [Inventory'de item yerini bulma]
+;  https://pirik3.blogspot.com/
+;  onlinehile.com
+;
+;  Author  : pirik3
+;  Version : 1.0
+;  Date    : 12/02/2023
+;
+;  Usage   : Ekran cozunurluk 1600x900, ekran nerede acildiysa orada kalmali, sol ust kosede.
+;            
+;  Added   : 
+;
+;  HotKeys : 
+;===========================================
+;*/
+
 if not A_IsAdmin
 	Run *RunAs "%A_AhkPath%" "%A_ScriptFullPath%" ; (A_AhkPath is usually optional if the script has the .ahk extension.) You would typically check  first.
 CoordMode Pixel, Window
