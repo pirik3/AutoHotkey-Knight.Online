@@ -1,3 +1,23 @@
+;/*
+;===========================================
+;  Knight online Macro bot
+;  https://pirik3.blogspot.com/
+;  onlinehile.com
+;
+;  Author  : pirik3
+;  Version : 1.0
+;  Date    : 20/04/2023
+;
+;  Usage:   [-] eger script ko ekraninda skilleri okumaz ise skilleri findtext uzerinden kendiniz bulmaniz lazim.
+;           [-] 
+;           [-] skilleri F1 den baslayip basar, skill aktif olur olmaz basa doner, 2 spike arasi olarak skillerinizi ayarlayin.
+;           [-] (ok:=FindText(X:="wait0", Y:=0, 1, 133, 209, 585, 0, 0, spike)) bu kod icerisinde skillerin aranacak alanini kendiniz belirtiniz FindText uzerinden "GetRange" alarak. Orn.(8, 219, 180, 408 yerine 522, 279, 1004, 707 gibi)
+;
+; FindText Script Link: https://www.autohotkey.com/boards/viewtopic.php?t=17834
+;
+;===========================================
+;*/
+
 #NoEnv
 #SingleInstance, Force
 SetBatchLines, -1
