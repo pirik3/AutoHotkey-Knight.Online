@@ -50,7 +50,7 @@ Gui, Show, w700 , Asas [pirik3]
 Gui, DDL:Default
 Gui, -Caption +Parent%HLV%
 Gui, Margin, 0, 0
-Gui, Add, DDL, w%Col2W% vasas hwndHCBB gDDLEvents, HPpot|MPpot|Minor|Light Feet|Critical Point|Beast Hiding|Blinding|Bloody Beast|Throwing Knife|Spike|Vampiric Touch|Stealth|Cut|Thrust|Illusion|Shock|Pierce|Blood Drain|Jab|Stab2|Stab|Eskrima
+Gui, Add, DDL, w%Col2W% vasas hwndHCBB gDDLEvents, HPpot|MPpot|Minor|Light Feet|Critical Point|Blinding|Bloody Beast|Spike|Cut|Thrust|Illusion|Shock|Pierce|Jab|Stab2|Stab ;|Eskrima|Beast Hiding|Throwing Knife|Vampiric Touch|Stealth|Blood Drain
 OnMessage(0x0201, "WM_LBUTTON")
 
 ;====================== Skill base64 ==== with cooldown =====================================================================
