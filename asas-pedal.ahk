@@ -9,7 +9,7 @@
 ;  Date    : 20/04/2023
 ;
 ;  Usage:   [-] eger script ko ekraninda skilleri okumaz ise skilleri findtext uzerinden kendiniz bulmaniz lazim.
-;           [-] 
+;           [-] skillbarinizdaki sayfa ve numaralari loop icerinde degistirin veya ekleyin.
 ;           [-] skilleri F1 den baslayip basar, skill aktif olur olmaz basa doner, 2 spike arasi olarak skillerinizi ayarlayin.
 ;           [-] (ok:=FindText(X:="wait0", Y:=0, 1, 133, 209, 585, 0, 0, spike)) bu kod icerisinde skillerin aranacak alanini kendiniz belirtiniz FindText uzerinden "GetRange" alarak. Orn.(8, 219, 180, 408 yerine 522, 279, 1004, 707 gibi)
 ;
@@ -38,6 +38,8 @@ Gui Add, CheckBox, hWndhChkCheckbox2 vChkCheckbox2 x550 y40 w120 h23, Minor ^ MP
 Gui Add, CheckBox, hWndhChkCheckbox2 vChkCheckbox3 x550 y60 w220 h23, SagClick Minor ^ MPpot.
 Gui Add, Button, hWndhBtnOk vhpal x550 y100 w100 h23, HP koordinat al.
 Gui Add, Button, hWndhBtnOk2 vmpal x550 y130 w100 h23, MP koordinat al.
+Gui Add, Button, hWndhBtnOk3 vkayitet x550 y160 w100 h23, Ayar kayit.
+Gui Add, Button, hWndhBtnOk4 vkayitac x550 y190 w100 h23, Kayit ac.
 Loop, % SkillSlot.Length()
    LV_Add("", SkillSlot[A_Index], "", "")
 LV_ModifyCol(1, Col1W)
@@ -51,19 +53,18 @@ Gui, Margin, 0, 0
 Gui, Add, DDL, w%Col2W% vasas hwndHCBB gDDLEvents, HPpot|MPpot|Minor|Light Feet|Critical Point|Beast Hiding|Blinding|Bloody Beast|Throwing Knife|Spike|Vampiric Touch|Stealth|Cut|Thrust|Illusion|Shock|Pierce|Blood Drain|Jab|Stab2|Stab|Eskrima
 OnMessage(0x0201, "WM_LBUTTON")
 
-;======================Skill base64=====================================================================================
-spike:="|<spike>##0$0/0/863535,1/0/000000,1/1/AD94B5,0/1/D8808A"
-thrust:="|<thrust>##0$0/0/863535,1/0/000000,1/1/9C8C9C,0/1/D07C83"
-vampirictouch:="|<vampirictouch>**50$7.2008ACaj6KDDSTRRc"
-cut:="|<cut>##0$0/0/8A3939,1/0/080808,1/1/731818,0/1/C14444"
-illusion:="|<illusion>**50$7.wkFjrOB6XH/bbb7R8"
-shock:="|<shock>##0$0/0/863535,1/0/000000,1/1/290000,0/1/9C3535"
-jab:="|<jab>##0$0/0/8A3939,1/0/080808,1/1/5A2118,0/1/BA4B44"
-stab2:="|<stab2>##0$0/0/BA6D6D,1/0/737B7B,1/1/294242,0/1/984F53"
-pierce:="|<pierce>##0$0/0/863535,1/0/000000,1/1/8C8C94,0/1/CC7C7C"
-stab:="|<stab>##0$0/0/8A3939,1/0/080808,1/1/84634A,0/1/BD6257"
-blooddrain:="|<blooddrain>**50$7.0000000000000l3bc"
-stroke:="|<stroke>*119$5.VzzzzjhU+2G2"
+;====================== Skill base64 ==== with cooldown =====================================================================
+spike:="|<spike>##0$0/0/D8808A,0/1/CC6D80,0/2/BA4B71,1/2/7B318C,1/1/946BA5,1/0/AD94B5"
+thrust:="|<thrust>##0$0/0/D07C83,0/1/C16674,0/2/AB445E,1/2/521863,1/1/7B6384,1/0/9C8C9C"
+pierce:="|<pierce>##0$0/0/CC7C7C,0/1/BA6669,0/2/954448,1/2/211821,1/1/6B636B,1/0/8C8C94"
+blodybeast:="|<blodybeast>##0$0/0/C3736B,0/1/C37A82,0/2/AC6382,1/2/334488,1/1/556688,1/0/333344"
+blinding:="|<blinding>##0$0/0/9D3535,0/1/BC3535,0/2/EA7A73,1/2/DD9988,1/1/770000,1/0/330000"
+cut:="|<cut>##0$0/0/C14444,0/1/C94B4B,0/2/C54444,1/2/7B1818,1/1/842929,1/0/731818"
+shock:="|<shock>##0$0/0/913535,0/1/953535,0/2/983535,1/2/4A0000,1/1/210000,1/0/180000"
+jab:="|<jab>##0$0/0/BA4B44,0/1/BD4F4B,0/2/B64844,1/2/5A1818,1/1/632929,1/0/5A2118"
+stab2:="|<stab2>##0$0/0/984F53,0/1/8A484F,0/2/8A4B53,1/2/00314A,1/1/082939,1/0/294242"
+stab:="|<stab>##0$0/0/BD6257,0/1/D07166,0/2/D8786D,1/2/B5947B,1/1/A5846B,1/0/84634A"
+;====================== Skill base64 ==== with cooldown ======================================================================
 
 Pause
 
@@ -72,36 +73,224 @@ Loop ; skilerin satir sutun bulup kaydetmesi lazim tus gonderebilmesi icin. sade
 {
  skillstun := CBB_Col - 1 ; sutunu duzelmek icin -1 deger cikartiyorum cunki 1. sutunda [skilbar] yazili, 2. sutun ise F1, fakat listview icerisinde 2. sutun olarak geciyor, bu nedenle -1 deger cikartiyorum, yani listview 'de 2. sutun KO da F1 oluyor ... vs.
  LV_GetText(asas, CBB_Row, CBB_Col) ; asas dropdown liste icerigini listview icerisinde ara.
- If (asas = "Spike") ; skill ismini listview icerisinde satir ve sutun olarak bul, clienta a tus olarak gonder.
+switch asas
+{}
+ If (asas = "HPpot") ; skill ismini listview icerisinde satir ve sutun olarak bul, clienta a tus olarak gonder. buralarin kisaltilmasi lazim.
  {
-  ToolTip, Spike %CBB_Row% / %CBB_Col%
-  Sleep, 1000
-  if (ok:=FindText(X:=0, Y:=0, 1, 133, 209, 585, 0, 0, spike))
-  {}
-   else
-   {
-    ;Send, {F%skillstun% down}{F%skillstun% up}
-    ;Send, {%CBB_Row% down}
-    ;Rr()
-    ;Send, {%CBB_Row% up}
-    ;Sleep, 1000
-   }
-  }
-  If (asas = "HPpot") ; skill ismini listview icerisinde satir ve sutun olarak bul, clienta a tus olarak gonder.
+  global hppotsatir := CBB_Row
+  global hppotsutun := CBB_Col - 1
+ }
+ If (asas = "MPpot") 
  {
-  ToolTip, HPpot %CBB_Row% / %CBB_Col%
-  if (ok:=FindText(X:=0, Y:=0, 1, 133, 209, 585, 0, 0, spike))
-  {}
-   else
-   {
-    ;Send, {F%skillstun% down}{F%skillstun% up}
-    ;Send, {%CBB_Row% down}
-    ;Rr()
-    ;Send, {%CBB_Row% up}
-    ;Sleep, 1000
-   }
+  global mppotsatir := CBB_Row
+  global mppotsutun := CBB_Col - 1
+ }
+ If (asas = "Minor") 
+ {
+  global minorsatir := CBB_Row
+  global minorsutun := CBB_Col - 1
+ }
+ If (asas = "Light Feet")
+ {
+  global lfsatir := CBB_Row
+  global lfsutun := CBB_Col - 1
+ }
+ If (asas = "Critical Point")
+ {
+  global cpsatir := CBB_Row
+  global cpsutun := CBB_Col - 1
+ }
+  If (asas = "Beast Hiding")
+ {
+  global bhsatir := CBB_Row
+  global bhsutun := CBB_Col - 1
+ }
+  If (asas = "Blinding")
+ {
+  global blgsatir := CBB_Row
+  global bldsutun := CBB_Col - 1
+ }
+  If (asas = "Bloody Beast")
+ {
+  global bbsatir := CBB_Row
+  global bbsutun := CBB_Col - 1
+ }
+  If (asas = "Throwing Knife")
+ {
+  global tksatir := CBB_Row
+  global tksutun := CBB_Col - 1
+ }
+  If (asas = "Spike")
+ {
+  global spikesatir := CBB_Row
+  global spikesutun := CBB_Col - 1
+ }
+  If (asas = "Vampiric Touch")
+ {
+  global vtsatir := CBB_Row
+  global vtsutun := CBB_Col - 1
+ }
+  If (asas = "Stealth")
+ {
+  global sthsatir := CBB_Row
+  global sthsutun := CBB_Col - 1
+ }
+  If (asas = "Cut")
+ {
+  global cutsatir := CBB_Row
+  global cutsutun := CBB_Col - 1
+ }
+  If (asas = "Thrust")
+ {
+  global thrsatir := CBB_Row
+  global thrsutun := CBB_Col - 1
+ }
+  If (asas = "Illusion")
+ {
+  global illsatir := CBB_Row
+  global illsutun := CBB_Col - 1
+ }
+  If (asas = "Shock")
+ {
+  global shcksatir := CBB_Row
+  global shcksutun := CBB_Col - 1
+ }
+  If (asas = "Pierce")
+ {
+  global piercesatir := CBB_Row
+  global piercesutun := CBB_Col - 1
+ }
+  If (asas = "Blood Drain")
+ {
+  global bdsatir := CBB_Row
+  global bdsutun := CBB_Col - 1
+ }
+  If (asas = "Jab")
+ {
+  global jabsatir := CBB_Row
+  global jabsutun := CBB_Col - 1
+ }
+  If (asas = "Stab2")
+ {
+  global st2satir := CBB_Row
+  global st2sutun := CBB_Col - 1
+ }
+  If (asas = "Stab")
+ {
+  global stsatir := CBB_Row
+  global stsutun := CBB_Col - 1
+ }
+  If (asas = "Eskrima")
+ {
+  global esksatir := CBB_Row
+  global esksutun := CBB_Col - 1
+ }
+
+ 
+  if (ok:=FindText(X:=0, Y:=0, 109-150000, 487-150000, 109+150000, 487+150000, 0, 0, spike))
+  {
+    if (ok:=FindText(X:=0, Y:=0, 109-150000, 487-150000, 109+150000, 487+150000, 0, 0, thrust))
+    {      
+      if (ok:=FindText(X:=0, Y:=0, 109-150000, 487-150000, 109+150000, 487+150000, 0, 0, pierce))
+      {       
+        if (ok:=FindText(X:=0, Y:=0, 109-150000, 487-150000, 109+150000, 487+150000, 0, 0, blodybeast))
+        {          
+          if (ok:=FindText(X:=0, Y:=0, 109-150000, 487-150000, 109+150000, 487+150000, 0, 0, blinding))
+          {
+            if (ok:=FindText(X:=0, Y:=0, 109-150000, 487-150000, 109+150000, 487+150000, 0, 0, cut))
+            {
+              if (ok:=FindText(X:=0, Y:=0, 109-150000, 487-150000, 109+150000, 487+150000, 0, 0, shock))
+              {
+                if (ok:=FindText(X:=0, Y:=0, 109-150000, 487-150000, 109+150000, 487+150000, 0, 0, jab))
+                {
+                  if (ok:=FindText(X:=0, Y:=0, 109-150000, 487-150000, 109+150000, 487+150000, 0, 0, stab2))
+                  {
+                    if (ok:=FindText(X:=0, Y:=0, 109-150000, 487-150000, 109+150000, 487+150000, 0, 0, stab))
+                    {
+                      continue
+                    }
+                    else
+                    {
+                      Send, {F%stsutun% down}{F%stsutun% up}
+                      Send, {%stsatir% down}
+                      Rr()
+                      Send, {%stsatir% up}
+                    }
+                  }
+                  else
+                  {
+                    Send, {F%st2sutun% down}{F%st2sutun% up}
+                    Send, {%st2satir% down}
+                    Rr()
+                    Send, {%st2satir% up}
+                  }
+                }
+                else
+                {
+                  Send, {F%jabsutun% down}{F%jabsutun% up}
+                  Send, {%jabsatir% down}
+                  Rr()
+                  Send, {%jabsatir% up}
+                }
+              }
+              else
+              {
+                Send, {F%shcksutun% down}{F%shcksutun% up}
+                Send, {%shcksatir% down}
+                Rr()
+                Send, {%shcksatir% up}
+              }
+            }
+            else
+            {
+              Send, {F%cutsutun% down}{F%cutsutun% up}
+              Send, {%cutsatir% down}
+              Rr()
+              Send, {%cutsatir% up}
+            }
+          }
+          else
+          {
+            Send, {F%blgsutun% down}{F%blgsutun% up}
+            Send, {%blgsatir% down}
+            Rr()
+            Send, {%blgsatir% up}
+          }
+        }
+        else
+        {
+          Send, {F%bbsutun% down}{F%bbsutun% up}
+          Send, {%bbsatir% down}
+          Rr()
+          Send, {%bbsatir% up}
+        }
+      }
+      else
+      {
+        Send, {F%piercesutun% down}{F%piercesutun% up}
+        Send, {%piercesatir% down}
+        Rr()
+        Send, {%piercesatir% up}
+      }
+    }
+    else
+    {
+      Send, {F%thrsutun% down}{F%thrsutun% up}
+      Send, {%thrsatir% down}
+      Rr()
+      Send, {%thrsatir% up}
+    }
   }
+  else
+  {
+    Send, {F%spikesutun% down}{F%spikesutun% up}
+    Send, {%spikesatir% down}
+    Rr()
+    Send, {%spikesatir% up}
+  }
+  
 }
+
 ; ======================================================================================================================
 ListViewEvents:
 Return
@@ -117,7 +306,6 @@ If (asas <> "") {
    GuiControl, Focus, VLV
    global skillstun := CBB_Col - 1
    ToolTip, %asas% skili > F%skillstun% ^ %CBB_Row% seklinde gonderilecek.
-   global spike = 
 }
 ; ----------------------------------------------------------------------------------------------------------------------
 DDLGuiEscape:
@@ -191,16 +379,9 @@ Rr()
   Send, {R down}{R up}
   Sleep, 10
   Send, {R down}{R up}
-  Sleep, 10
-  Send, {R down}{R up}
-  Sleep, 10
-  Send, {R down}{R up}
-  Sleep, 10
-  Send, {R down}{R up}
-  Sleep, 10
-  Send, {R down}{R up}
-  Sleep, 310
+  Sleep, 260
 }
+
 ; ======================================================================================================================
 ; LV_EX_SubItemHitTest - Gets the column (subitem) at the passed coordinates or the position of the mouse cursor.
 ; ======================================================================================================================
