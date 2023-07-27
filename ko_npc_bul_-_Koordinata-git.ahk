@@ -10,6 +10,7 @@
 ;
 ;  Usage:  *Script'i admin modda calistiriniz
 ;           Window size 1600x900, windowed, top left corner.
+;	 ** you have to find your own coordinates for each number of X and Y in game to be get recognized by the script individually.
 ;
 ;  Hotkeys: [Delete] - Script 'i baslat/durdur.
 ;			[Home] - cikis yap
