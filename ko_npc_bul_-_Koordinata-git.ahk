@@ -107,43 +107,8 @@ Loop
   ;~ Repair()
 }
 
-koordinat_tara_X()
-{
-  global xdigit1, xdigit2, xdigit3, xdigit4, xdigit5, xdigit6, xdigit7, xdigit8, xdigit9, xdigit0
-  
-  ;ToolTip, X = %xdigit2%%xdigit3%%xdigit4%
-  
-  loop, 10 {
-     i := A_Index - 1
-     if (ok:=FindText(X, Y, 113, 105, 121, 119, 0, 0, digit%i%)) ; xdigit2
-       xdigit2 := i
-     if (ok:=FindText(X, Y, 121, 104, 129, 120, 0, 0, digit%i%)) ; xdigit3
-       xdigit3 := i
-     if (ok:=FindText(X, Y, 127, 104, 135, 120, 0, 0, digit%i%)) ; xdigit4
-       xdigit4 := i
-  }
-}
 
-
-koordinat_tara_Y()
-{
-  global ydigit1, ydigit2, ydigit3, ydigit4, ydigit5, ydigit6, ydigit7, ydigit8, ydigit9, ydigit0
-  
-  ;ToolTip, Y = %ydigit1%%ydigit2%%ydigit3%
-  
-  loop, 10 {
-     i := A_Index - 1
-     if (ok:=FindText(X, Y, 155, 105, 163, 119, 0, 0, digit%i%)) ; ydigit3
-       ydigit3 := i
-     if (ok:=FindText(X, Y, 147, 106, 155, 118, 0, 0, digit%i%)) ; ydigit2
-       ydigit2 := i
-     if (ok:=FindText(X, Y, 139, 104, 149, 120, 0, 0, digit%i%)) ; ydigit2
-       ydigit1 := i
-  
-}
-}
-
-koordinat_tara_XY()
+koordinat_tara_XY() ; kendi koordinatlarinizi buraya yazmalisiniz her bir sayi icin koordinat icerisindeki.
 {
   ;ToolTip, X = %xdigit2%%xdigit3%%xdigit4% / Y = %ydigit1%%ydigit2%%ydigit3% ,0, 0
   loop, 10
