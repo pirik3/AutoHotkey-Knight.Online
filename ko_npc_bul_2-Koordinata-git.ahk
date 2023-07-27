@@ -70,16 +70,20 @@ global digit2:="|<digit2>#52@0.80$7.0D00000EDU4"
 global digit3:="|<digit3>#8@0.80$7.0D00EE00D04"
 global digit4:="|<digit4>#33@0.80$7.10UE9y21E"
 global digit5:="|<digit5>#52@0.80$7.0D03k020C04"
-global digit6:="|<digit6>#30@0.80$7.07421s2F704"
+global digit6:="|<digit6>FFFFFF-000000$5.A07UUR"
 global digit7:="|<digit7>#11@0.80$7.07U0E08048"
-global digit8:="|<digit8>#31@0.80$7.07420s2F704"
+global digit8:="|<digit8>FFFFFF-000000$5.Q2300R"
 global digit9:="|<digit9>#36@0.80$8.01k00Xs013U0U"
 global digit0:="|<digit0>#37@0.80$5.0u0EVUs4"
 
-;xdigit1
-;xdigit2 -> 113, 105, 121, 119,
-;xdigit3 -> 121, 104, 129, 120,
-;xdigit4 -> 127, 104, 135, 120,
+global xdigit1, xdigit2, xdigit3, xdigit4, xdigit5, xdigit6, xdigit7, xdigit8, xdigit9, xdigit0
+global ydigit1, ydigit2, ydigit3, ydigit4, ydigit5, ydigit6, ydigit7, ydigit8, ydigit9, ydigit0
+
+
+;xdigit1 -> 113, 105, 121, 119,
+;xdigit2 -> 121, 104, 129, 120,
+;xdigit3 -> 127, 104, 135, 120,
+;xdigit4
 
 ;ydigit1 -> 139, 104, 149, 120,
 ;ydigit2 -> 147, 106, 155, 118,
@@ -93,9 +97,10 @@ WinActivate, Knight OnLine Client
 
 Loop
 {
-  koordinat_tara_Y()
-  koordinat_tara_X()
-  ToolTip, X = %xdigit2%%xdigit3%%xdigit4% Y = %ydigit1%%ydigit2%%ydigit3%
+  ;koordinat_tara_Y()
+  ;koordinat_tara_X()
+  koordinat_tara_XY()
+  charmove(656,396)
   ;koordinat_al()
   ;Cubense_ac()
   ;~ Repair()
@@ -133,10 +138,73 @@ koordinat_tara_Y()
        ydigit2 := i
      if (ok:=FindText(X, Y, 139, 104, 149, 120, 0, 0, digit%i%)) ; ydigit2
        ydigit1 := i
-  }
+  
+}
 }
 
+koordinat_tara_XY()
+{
+  ;ToolTip, X = %xdigit2%%xdigit3%%xdigit4% / Y = %ydigit1%%ydigit2%%ydigit3% ,0, 0
+  loop, 10
+  {
+    i := A_Index - 1
+    if (ok:=FindText(X, Y, 113, 105, 121, 119, 0, 0, digit%i%)) ; xdigit2
+       xdigit1 := i
+     if (ok:=FindText(X, Y, 121, 104, 129, 120, 0, 0, digit%i%)) ; xdigit2
+       xdigit2 := i
+     if (ok:=FindText(X, Y, 127, 104, 135, 120, 0, 0, digit%i%)) ; xdigit3
+       xdigit3 := i
+     if (ok:=FindText(X, Y, 127, 104, 135, 120, 0, 0, digit%i%)) ; xdigit4
+       xdigit4 := i
+     
+     b := A_Index - 1
+     if (ok:=FindText(X, Y, 155, 105, 163, 119, 0, 0, digit%b%)) ; ydigit3
+       ydigit3 := b
+     if (ok:=FindText(X, Y, 147, 106, 155, 118, 0, 0, digit%b%)) ; ydigit2
+       ydigit2 := b
+     if (ok:=FindText(X, Y, 139, 104, 149, 120, 0, 0, digit%b%)) ; ydigit2
+       ydigit1 := b 
+  } 
+
+}
+
+charmove(xXx,yYy)
+{
+  CoordMode Pixel, Window
+  global xX := (xdigit1 xdigit2 xdigit3) ;ondalik sistemde kayit et
+  global yY := (ydigit1 ydigit2 ydigit3)
+
+  if ( xX < xXx ) ; sola git
+  {
+    MouseMove, 598, 471
+    Send, {LButton down}
+  }
+  else if ( xX > xXx ) ; saga git
+    {
+      MouseMove, 756, 475
+      Send, {LButton down}
+    }
+    Send, {LButton up}
+    Sleep, 100
+    
+  if ( yY < yYy ) ; yukari git
+  {
+    MouseMove, 687, 518
+    Send, {LButton down}
+  }
+  else if ( yY > yYy ) ; asagi git
+    {
+      MouseMove, 697, 446
+      Send, {LButton down}
+    }
+    Send, {LButton up}
+    Sleep, 100
+    ;ToolTip, "github/pirik3" , 0,0
+}
+
+
 CapsLock::
+;~ WinMove, Knight OnLine Client, , 0, 0, 1620, 940
 koordinat_al()
 {
   CoordMode Pixel, Window
@@ -144,7 +212,7 @@ koordinat_al()
   Gdip_SaveBitmapToFile(snapx, "koordinatXY.jpg")
   ;snapy := Gdip_BitmapFromScreen(140 . "|" . 107 . "|" . 25 . "|" . 12)
   ;Gdip_SaveBitmapToFile(snapy, "koordinatY.jpg")
-  
+
   text1 := OcrFile("koordinatXY.jpg")
   coordX := OcrArea(112, 100, 40, 35)
   ToolTip, %coordX%
