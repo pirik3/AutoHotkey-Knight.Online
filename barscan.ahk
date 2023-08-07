@@ -2,42 +2,48 @@ if not A_IsAdmin
 	Run *RunAs "%A_ScriptFullPath%" ; (A_AhkPath is usually optional if the script has the .ahk extension.) You would typically check  first.
 CoordMode Pixel, Screen	; CoordMode, ToolTip|Pixel|Mouse|Caret|Menu [, Screen|Window|Client]
 
-global HealthHealPercent := 50
+global HealthHealPercent := 60
 
 t1:=A_TickCount, Text:=X:=Y:=""
 
 ;{ Priest
 global priestkitap:="|<kitap>#572@0.80$31.00400000000000000009U003ZU0006E00038001sg007y6007X70031b001in000zNU00Twk00BwM006EA0030A001rk000TU000A00000000000000000000000000000000000000000000000000000000000E"
-
 global str30:="|<str30>#341@0.79$25.00UEU4k8E2M6M1A7A1X360Mb30CD303b200v600C6007j001y000S0E070801060003U001k000w000C0007U001s000S00070003k00E"
-
 ;}
+ape:="|<ape>#1018@0.74$71.00000000000000000000000000000000000000000000000000000000000000S00000000000w00000000001wDkD00000007sRkr0000000Cstnb0000000NlljC0000001nXXTw0000003zbCw00000007DCQs0000000QCRkkU000000sAzUz000000001k00000000003U00000000000000000000000000000000000000000000000000000000000000000000000000000000000000001"
+
 
 Pause
 
 Loop{
-	
+
+random := random(50, 150)
+Send, {z down}{z up}
+sleep, random
 HealthCheck: ; example of a subroutine to check the health bar and take action if it's below a set value
 	HealthHealX := (PlayerHealthBarLeftX + ((PlayerHealthBarRightX - PlayerHealthBarLeftX) * (HealthHealPercent/100)))
 	PixelGetColor, HealthHealCheck, %HealthHealX%, %PlayerHealthBarY% ;, Slow
 	If (HealthHealCheck != PlayerHealthBarColor) {
-		ToolTip, need heal
+		;ToolTip, need heal
+        Send, {x down}{x up}
+        sleep, random
         Send, {3 down}
-        Sleep, 2000
+        sleep, 2000
         Send, {3 up}
 	}
-	else
-		Send, {z down}
-        Sleep, 500
-        Send, {z up}
-        Sleep, 500
-        Send, {r down}
-        Sleep, 500
-        Send, {r up}
-        Sleep, 500
-        Send, {4 down}
-        Sleep, 500
-        Send, {4 up}
+	else 
+        if (ok:=FindText(X, Y, 682, 43, 930, 160, 0, 0, ape))
+        {
+          Send, {r down}{r up}
+          sleep, random
+          Send, {r down}{r up}
+          sleep, random
+          Send, {4 down}
+          sleep, 500
+          Send, {4 up}
+        }
+        else
+          
 	
   if (ok:=FindText(X, Y, 1917, 279, 0, 0, 0, 0, str30))
   {
@@ -50,7 +56,6 @@ HealthCheck: ; example of a subroutine to check the health bar and take action i
   }
   else
       Send, {0 down}{0 up}
-
 }
 
 /*
@@ -89,6 +94,16 @@ BarScan(ByRef Color, ByRef BarY, ByRef LeftX, ByRef RightX) {
 	BarScan(PlayerHealthBarColor, PlayerHealthBarY, PlayerHealthBarLeftX, PlayerHealthBarRightX)
 	MsgBox Player Health Bar Set`n`nColor: %PlayerHealthBarColor%`nY Coord: %PlayerHealthBarY%`nLeftX Coord: %PlayerHealthBarLeftX%`nRightX Coord: %PlayerHealthBarRightX%
 Return
+
+random(min, max)
+{
+    return floor((rand() * (max - min + 1)) + min)
+}
+
+rand()
+{
+    return (A_TickCount / 1000) - floor(A_TickCount / 1000)
+}
 
  Home::Pause
  Esc::ExitApp
