@@ -1,8 +1,10 @@
+;;; SteamKO
+
 if not A_IsAdmin
 	Run *RunAs "%A_ScriptFullPath%" ; (A_AhkPath is usually optional if the script has the .ahk extension.) You would typically check  first.
 CoordMode Pixel, Screen	; CoordMode, ToolTip|Pixel|Mouse|Caret|Menu [, Screen|Window|Client]
 
-global HealthHealPercent := 60
+global HealthHealPercent := 70
 
 t1:=A_TickCount, Text:=X:=Y:=""
 
@@ -10,19 +12,18 @@ t1:=A_TickCount, Text:=X:=Y:=""
 global priestkitap:="|<kitap>#572@0.80$31.00400000000000000009U003ZU0006E00038001sg007y6007X70031b001in000zNU00Twk00BwM006EA0030A001rk000TU000A00000000000000000000000000000000000000000000000000000000000E"
 global str30:="|<str30>#341@0.79$25.00UEU4k8E2M6M1A7A1X360Mb30CD303b200v600C6007j001y000S0E070801060003U001k000w000C0007U001s000S00070003k00E"
 ;}
-ape:="|<ape>#1018@0.74$71.00000000000000000000000000000000000000000000000000000000000000S00000000000w00000000001wDkD00000007sRkr0000000Cstnb0000000NlljC0000001nXXTw0000003zbCw00000007DCQs0000000QCRkkU000000sAzUz000000001k00000000003U00000000000000000000000000000000000000000000000000000000000000000000000000000000000000001"
+global ape:="|<ape>#1018@0.74$71.00000000000000000000000000000000000000000000000000000000000000S00000000000w00000000001wDkD00000007sRkr0000000Cstnb0000000NlljC0000001nXXTw0000003zbCw00000007DCQs0000000QCRkkU000000sAzUz000000001k00000000003U00000000000000000000000000000000000000000000000000000000000000000000000000000000000000001"
+
 
 
 Pause
 
 Loop{
-
-random := random(50, 150)
-Send, {z down}{z up}
-sleep, random
-HealthCheck: ; example of a subroutine to check the health bar and take action if it's below a set value
+random = random (100, 150)
+;~ HealthCheck: ; example of a subroutine to check the health bar and take action if it's below a set value
 	HealthHealX := (PlayerHealthBarLeftX + ((PlayerHealthBarRightX - PlayerHealthBarLeftX) * (HealthHealPercent/100)))
-	PixelGetColor, HealthHealCheck, %HealthHealX%, %PlayerHealthBarY% ;, Slow
+	PixelGetColor, HealthHealCheck, %HealthHealX%, %PlayerHealthBarY% ;, Slowl
+    sleep, random
 	If (HealthHealCheck != PlayerHealthBarColor) {
 		;ToolTip, need heal
         Send, {x down}{x up}
@@ -32,30 +33,73 @@ HealthCheck: ; example of a subroutine to check the health bar and take action i
         Send, {3 up}
 	}
 	else 
-        if (ok:=FindText(X, Y, 682, 43, 930, 160, 0, 0, ape))
-        {
+        ;~ if (ok:=FindText(X, Y, 682, 43, 930, 160, 0, 0, ape))
+        ;~ {
+          Send, {z down}{z up}
           Send, {r down}{r up}
           sleep, random
           Send, {r down}{r up}
           sleep, random
           Send, {4 down}
-          sleep, 500
+          sleep, random
           Send, {4 up}
-        }
-        else
           
-	
-  if (ok:=FindText(X, Y, 1917, 279, 0, 0, 0, 0, str30))
-  {
+            if (ok:=FindText(X, Y, 1917, 279, 0, 0, 0, 0, str30))
+            {
+            }
+            else
+                Send, {6 down}{6 up}
+                
+            if (ok:=FindText(X, Y, 1917, 279, 0, 0, 0, 0, priestkitap))
+            {
+            }
+            else
+                Send, {0 down}{0 up}
+}
+
+npcara()
+{
+  if (ok:=FindText(X, Y, 1016-150000, 207-150000, 1016+150000, 207+150000, 0, 0, Text)) ; ekranda tyroon npcsini ara,
+        {
+          Send, {RButton up}    ; ekranda npc yi buldugunda, sag click burada birakiyor
+          MouseMove, X1, Y1 ; mouse koordinati typoon icin
+          Send, {LButton down}{LButton up}{LButton down}{LButton up} ; cikt tiklama charin yurutme
+          Send, {b down}{b up}{b down}{b up} ; b ile  npc secme
+        }
+        else ; npc yi bulamaz ise
+        {
+          Send, {RButton down} ; sag click basili tut
+          MouseGetPos, x,y ; mouse koorniti al
+          MouseMove, x+100,y ; mouse X duzleminde saga dogru hareket ettir
+          Sleep, 2000
+        }
+}
+
+otoloot_ko()
+{  
+  ImageSearch, foundX, foundY, 0, 0, %A_ScreenWidth%, %A_ScreenHeight%, *100 coin.bmp
+  If(ErrorLevel = 0){
+	MouseClick, Right, %foundX%, %foundY%
   }
-  else
-      Send, {6 down}{6 up}
-      
-  if (ok:=FindText(X, Y, 1917, 279, 0, 0, 0, 0, priestkitap))
-  {
+  If(ErrorLevel = 1){
+    Random, x, 671, 964
+    Random, y, 327, 616
+    MouseClick, Right, %x%, %y%
   }
-  else
-      Send, {0 down}{0 up}
+}
+
+RPR_townat()
+{
+  if (ok:=FindText(X, Y,1386, 576, 1621, 797, 0, 0, silahyandi)) ; npc ustte arama fonksiyonu mavi, eger bulursa;
+  {
+    if (ok:=FindText(X, Y,1509-150000, 676-150000, 1509+150000, 0, 0, skill_log_gate))
+    {
+    }
+    else
+      Send, {9 down}
+      Sleep, 1000
+      Send, {9 up}
+  }
 }
 
 /*
@@ -104,13 +148,17 @@ rand()
 {
     return (A_TickCount / 1000) - floor(A_TickCount / 1000)
 }
+ 
 
  Home::Pause
  Esc::ExitApp
  GuiClose:
  ExitApp
  
- ;==========
+ 
+
+
+;==========
 
 
 FindText(ByRef x:="FindTextClass", ByRef y:="", args*)
